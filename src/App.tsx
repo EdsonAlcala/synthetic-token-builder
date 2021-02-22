@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom"
+
+import { UMARegistryProvider } from './hooks';
+import { ErrorBoundary } from './ErrorBoundary';
+import { Routes } from './routes';
+
 import './App.css';
 
-function App() {
+export const App: React.FC = () => {
+  // const match = useRouteMatch()
+  // const history = useHistory()
+
+  // useEffect(() => {
+  //   history.push(`${HOME_ROUTE}`)
+  // }, []) // eslint-disable-line
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <React.Fragment>
+    //   {/* <Switch> */}
+    //   {/* <Route path={`${match.path}/${SELECT_COLLATERAL_TOKEN}`}>
+    //       <DeployCollateralToken />
+    //     </Route>
+    //     <Route path={`${match.path}/${SELECT_PRICE_IDENTIFIER_ROUTE}`}>
+    //       <DeployPriceIdentifier />
+    //     </Route> */}
+    //   {/* </Switch> */}
+    // </React.Fragment>
+    <ErrorBoundary>
+      <UMARegistryProvider>
+        <Routes />
+      </UMARegistryProvider>
+    </ErrorBoundary>
   );
 }
 
