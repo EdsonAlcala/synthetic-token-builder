@@ -29,14 +29,14 @@ function useConnection() {
       hideBranding: true,
       networkId: 1, // Default to main net. If on a different network will change with the subscription.
       subscriptions: {
-        address: (address: string | null) => {
-          setAddress(address);
+        address: (newAddress: string | null) => {
+          setAddress(newAddress);
         },
         network: async (networkId: any) => {
           if (!SUPPORTED_NETWORK_IDS.includes(networkId)) {
             alert("This dApp will work only with the Mainnet or Kovan network");
           }
-          onboard?.config({ networkId: networkId });
+          onboard?.config({ networkId });
         },
         wallet: async (wallet: Wallet) => {
           if (wallet.provider) {
@@ -81,8 +81,8 @@ function useConnection() {
         });
       });
       // debounce to prevent subscribers making unnecessary calls
-      const block$ = observable.pipe(debounceTime(1000));
-      setBlock$(block$);
+      const newBlock$ = observable.pipe(debounceTime(1000));
+      setBlock$(newBlock$);
     }
 
     if (provider && address) {

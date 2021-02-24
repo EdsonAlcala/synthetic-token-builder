@@ -41,8 +41,8 @@ export const HomeView: React.FC = () => {
 
   return (
     <WrapperContainer maxWidth="lg">
-      <Grid container>
-        <Grid item xs={6} lg={6}>
+      <Grid container={true}>
+        <Grid item={true} xs={6} lg={6}>
           <Title variant="h3">Synthetic Token Builder</Title>
           <Subtitle variant="h6">Deploy synthetic tokens easily</Subtitle>
           <StyledLink to={`${TOKEN_BUILDER_ROUTE}`}>
@@ -51,7 +51,13 @@ export const HomeView: React.FC = () => {
             </GetStartedButton>
           </StyledLink>
         </Grid>
-        <Grid item xs={6} lg={6} alignContent="center" alignItems="center">
+        <Grid
+          item={true}
+          xs={6}
+          lg={6}
+          alignContent="center"
+          alignItems="center"
+        >
           <YouTube opts={opts} videoId="Qe85PsrS7Ho" onReady={onReady} />
         </Grid>
       </Grid>

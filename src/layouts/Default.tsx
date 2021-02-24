@@ -15,10 +15,10 @@ export const DefaultLayout: React.FC = ({ children }) => {
     <Box pt="1em">
       <Container>
         <MainContainer>
-          <Grid item>
+          <Grid item={true}>
             <Header />
           </Grid>
-          <Grid item>{children}</Grid>
+          <Grid item={true}>{children}</Grid>
         </MainContainer>
       </Container>
     </Box>

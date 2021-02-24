@@ -32,14 +32,14 @@ export const SyntheticTokenBuilderView: React.FC = () => {
 export const TokenBuilderSection = () => {
   return (
     <Container style={{ height: "100%", padding: "2em" }}>
-      <Grid container>
-        <Grid item xs={3}>
+      <Grid container={true}>
+        <Grid item={true} xs={3}>
           <NavMenu />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item={true} xs={6}>
           <StepManager />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item={true} xs={3}>
           <RightPanel />
         </Grid>
       </Grid>

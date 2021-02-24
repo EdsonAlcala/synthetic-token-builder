@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Container, Grid, Typography } from "@material-ui/core";
-import styled from "styled-components";
+import Styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Connection from "../hooks/Connection";
@@ -12,7 +12,7 @@ interface IProps {
   };
 }
 
-const StyledTypography = styled(Typography)`
+const StyledTypography = Styled(Typography)`
   font-weight: 400;
 `;
 
@@ -20,15 +20,15 @@ export const Header = () => {
   return (
     <Container maxWidth="lg">
       <Grid
-        container
+        container={true}
         alignContent="space-between"
         alignItems="center"
         justify="space-between"
       >
-        <Grid item>
+        <Grid item={true}>
           <Logo />
         </Grid>
-        <Grid item>
+        <Grid item={true}>
           <AddressBar />
         </Grid>
       </Grid>
@@ -58,7 +58,7 @@ const Logo = () => {
   );
 };
 
-const StyledLink = styled(Link)`
+const StyledLink = Styled(Link)`
   text-decoration: none;
 `;
 
@@ -99,7 +99,7 @@ const AddressBar = () => {
   );
 };
 
-const ConnectButton = styled(Button)`
+const ConnectButton = Styled(Button)`
   padding-top: 8px;
   padding-bottom: 8px;
   pointer-events: ${({ styled }: IProps) =>
@@ -108,7 +108,7 @@ const ConnectButton = styled(Button)`
     styled.connected ? "capitalize" : "uppercase"};
 `;
 
-const AddressBox = styled.div`
+const AddressBox = Styled.div`
   border: 1px solid rgba(255, 74, 74, 0.5);
   margin-right: 10px;
   align-self: stretch;
