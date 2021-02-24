@@ -1,14 +1,22 @@
-import React, { PropsWithChildren } from "react"
-import Alert from "react-bootstrap/Alert"
+import React, { PropsWithChildren } from "react";
+import Alert from "react-bootstrap/Alert";
 
 interface Props {
-    show?: boolean
+  show?: boolean;
 }
 
-export const SuccessMessage: React.FC<PropsWithChildren<Props>> = ({ children, show }) => {
-    return (
-        <Alert variant="success" style={{ width: "85%", fontSize: "0.80em" }} show={show} transition={false}>
-            {children}
-        </Alert>
-    )
-}
+export const SuccessMessage: React.FC<PropsWithChildren<Props>> = ({
+  children,
+  show,
+}) => {
+  return (
+    <Alert
+      variant="success"
+      style={{ width: "85%", fontSize: "0.80em" }}
+      show={show}
+      transition={false}
+    >
+      {children}
+    </Alert>
+  );
+};

@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react"
-import Card from "react-bootstrap/Card"
-import styled from "styled-components"
+import React, { useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import styled from "styled-components";
 
 // import TestnetERC20Artifact from "@uma/core/build/contracts/TestnetERC20.json"
 
-import { useGlobalState } from "../hooks/useGlobalState"
-import Connection from "../hooks/Connection"
+import { useGlobalState } from "../hooks/useGlobalState";
+import Connection from "../hooks/Connection";
 
 const Paragraph = styled.p`
   font-size: 0.9em;
   font-weight: 300;
-`
+`;
 
 export const RightPanel: React.FC = () => {
-  const { address } = Connection.useContainer()
-  const { selectedCollateralToken, selectedPriceIdentifier } = useGlobalState()
-  const [collateralBalance, setCollateralBalance] = useState("0")
+  const { address } = Connection.useContainer();
+  const { selectedCollateralToken, selectedPriceIdentifier } = useGlobalState();
+  const [collateralBalance, setCollateralBalance] = useState("0");
 
   // TODO: When collateral changes, show balance in the right panel..
 
@@ -51,16 +51,23 @@ export const RightPanel: React.FC = () => {
           <React.Fragment>
             <AccordionContentBody className="borderBottomExceptLast">
               <p style={{ fontWeight: "bold" }}>
-                Name: <span style={{ fontWeight: "lighter" }}>{selectedCollateralToken.name}</span>
+                Name:{" "}
+                <span style={{ fontWeight: "lighter" }}>
+                  {selectedCollateralToken.name}
+                </span>
               </p>
               <p>
                 Symbol: <span>{selectedCollateralToken.symbol}</span>
               </p>
               <p>
-                Total supply: <span>{selectedCollateralToken.totalSupply.toString()}</span>
+                Total supply:{" "}
+                <span>{selectedCollateralToken.totalSupply.toString()}</span>
               </p>
               <p>
-                Address: <span style={{ fontSize: "0.8em" }}>{selectedCollateralToken.address}</span>
+                Address:{" "}
+                <span style={{ fontSize: "0.8em" }}>
+                  {selectedCollateralToken.address}
+                </span>
               </p>
             </AccordionContentBody>
           </React.Fragment>
@@ -80,14 +87,14 @@ export const RightPanel: React.FC = () => {
         </Card>
       )}
     </React.Fragment>
-  )
-}
+  );
+};
 
 const AccordionContentBody = styled.div<{ direction?: string }>`
   display: flex;
   padding: 0.5em 1em;
   flex-direction: ${(props) => props.direction || "column"};
-`
+`;
 
 const Image = styled.div`
   display: flex;
@@ -98,7 +105,7 @@ const Image = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 1em;
-`
+`;
 
 const Description = styled.div`
   display: flex;
@@ -109,4 +116,4 @@ const Description = styled.div`
                           font - size: 0.85em;
     font-weight: 300;
   }
-`
+`;

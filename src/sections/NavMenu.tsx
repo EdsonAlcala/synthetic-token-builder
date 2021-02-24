@@ -1,28 +1,28 @@
-import React from "react"
-import { Nav } from "react-bootstrap"
-import { NavLink } from "react-router-dom"
+import React from "react";
+import { Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
-import styled from "styled-components"
-import { TOKEN_BUILDER_ROUTE } from "../constants"
-import { useStep, DEFAULT_STEP, StepDefinition } from "../hooks/useStep"
+import styled from "styled-components";
+import { TOKEN_BUILDER_ROUTE } from "../constants";
+import { useStep, DEFAULT_STEP, StepDefinition } from "../hooks/useStep";
 
 export const NavMenu: React.FC = () => {
-  const { getAllSteps, currentStep, goNextStep } = useStep()
+  const { getAllSteps, currentStep, goNextStep } = useStep();
 
-  const allSteps = getAllSteps()
+  const allSteps = getAllSteps();
 
   const handleOnNavClick = (e: any) => {
     // e.preventDefault()
-    // 
-    console.log("clicked")
-    goNextStep()
-    console.log("Currente step", currentStep)
-  }
+    //
+    console.log("clicked");
+    goNextStep();
+    console.log("Currente step", currentStep);
+  };
 
   return (
     <Nav defaultActiveKey={allSteps[DEFAULT_STEP]} className="flex-column">
       {allSteps.map((currentStepDefinition: StepDefinition, index: number) => {
-        const text = `${currentStepDefinition.name}`
+        const text = `${currentStepDefinition.name}`;
         return (
           <StyledNavLink
             onClick={handleOnNavClick}
@@ -34,22 +34,27 @@ export const NavMenu: React.FC = () => {
               fontSize: "1em",
             }}
           >
-            <Nav.Link as={StyledDiv} key={currentStepDefinition.key} href={currentStepDefinition.route} disabled={true}>
+            <Nav.Link
+              as={StyledDiv}
+              key={currentStepDefinition.key}
+              href={currentStepDefinition.route}
+              disabled={true}
+            >
               <NumberContainer>
                 {currentStep.order > currentStepDefinition.order ? (
                   <CompletedIcon />
                 ) : (
-                    <span>{currentStepDefinition.order}</span>
-                  )}
+                  <span>{currentStepDefinition.order}</span>
+                )}
               </NumberContainer>
               {text}
             </Nav.Link>
           </StyledNavLink>
-        )
+        );
       })}
     </Nav>
-  )
-}
+  );
+};
 
 const CompletedIcon: React.FC = () => {
   return (
@@ -63,8 +68,8 @@ const CompletedIcon: React.FC = () => {
     >
       <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
     </svg>
-  )
-}
+  );
+};
 
 const NumberContainer = styled.div`
   display: inline-flex;
@@ -78,7 +83,7 @@ const NumberContainer = styled.div`
   font-size: 0.8em;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const StyledNavLink = styled(NavLink)`
   color: black;
@@ -89,7 +94,7 @@ const StyledNavLink = styled(NavLink)`
     cursor: text;
   }
   text-decoration: none;
-`
+`;
 
 const StyledDiv = styled.div`
   color: black;
@@ -97,4 +102,4 @@ const StyledDiv = styled.div`
   &:hover {
     cursor: text;
   }
-`
+`;

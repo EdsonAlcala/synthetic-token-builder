@@ -5,16 +5,14 @@
 import { ethers } from "ethers";
 type Network = ethers.providers.Network;
 export const config = (network: Network | null) => {
-  const infuraId =
-    process.env.REACT_APP_INFURA_ID || "0x000";
-  const infuraRpc = `https://${network ? network?.name : "mainnet"
-    }.infura.io/v3/${infuraId}`;
+  const infuraId = process.env.REACT_APP_INFURA_ID || "0x000";
+  const infuraRpc = `https://${
+    network ? network?.name : "mainnet"
+  }.infura.io/v3/${infuraId}`;
 
   return {
     onboardConfig: {
-      apiKey:
-        process.env.REACT_APP_ONBOARD_API_KEY ||
-        "111",
+      apiKey: process.env.REACT_APP_ONBOARD_API_KEY || "111",
       onboardWalletSelect: {
         wallets: [
           { walletName: "metamask", preferred: true },

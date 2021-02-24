@@ -1,5 +1,3 @@
 export const SelectPriceIdentifier = () => {
-    return (
-        <h1>SelectPriceIdentifier</h1>
-    )
-}
+  return <h1>SelectPriceIdentifier</h1>;
+};

@@ -1,2 +1,2 @@
-export * from './UMAContractName'
-export * from './Web3'
+export * from "./UMAContractName";
+export * from "./Web3";

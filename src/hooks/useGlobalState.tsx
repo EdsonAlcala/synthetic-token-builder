@@ -1,25 +1,39 @@
-import { BigNumber, ethers } from "ethers"
-import React, { PropsWithChildren, useContext, useEffect, useState } from "react"
-import { Observable } from "rxjs"
-import { debounceTime } from "rxjs/operators"
+import { BigNumber, ethers } from "ethers";
+import React, {
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Observable } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
-import { Block, Token } from "../types"
+import { Block, Token } from "../types";
 
-import { useUMARegistry } from "./useUMARegistry"
-import Connection from "./Connection"
-
+import { useUMARegistry } from "./useUMARegistry";
+import Connection from "./Connection";
 
 interface IGlobalStateProvider {
-  priceIdentifiers: string[]
-  collateralTokens: Token[]
-  setSelectedCollateralToken: (token?: Token) => void
-  selectedCollateralToken?: Token
-  setSelectedPriceIdentifier: (priceIdentifier: string) => void
-  selectedPriceIdentifier: string
+  priceIdentifiers: string[];
+  collateralTokens: Token[];
+  setSelectedCollateralToken: (token?: Token) => void;
+  selectedCollateralToken?: Token;
+  setSelectedPriceIdentifier: (priceIdentifier: string) => void;
+  selectedPriceIdentifier: string;
 }
 
-const defaultToken: Token = { name: "SNT", symbol: "SNT", decimals: 18, totalSupply: BigNumber.from("10000000") }
-const defaultCollateral: Token = { name: "WETH", symbol: "WETH", decimals: 18, totalSupply: BigNumber.from("10000000") }
+const defaultToken: Token = {
+  name: "SNT",
+  symbol: "SNT",
+  decimals: 18,
+  totalSupply: BigNumber.from("10000000"),
+};
+const defaultCollateral: Token = {
+  name: "WETH",
+  symbol: "WETH",
+  decimals: 18,
+  totalSupply: BigNumber.from("10000000"),
+};
 
 /* tslint:disable */
 // Defaults
@@ -28,19 +42,26 @@ const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   collateralTokens: [defaultCollateral],
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultToken,
-  setSelectedCollateralToken: () => { },
-  setSelectedPriceIdentifier: () => { },
-})
+  setSelectedCollateralToken: () => {},
+  setSelectedPriceIdentifier: () => {},
+});
 /* tslint:enable */
 
-export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const { provider, signer } = Connection.useContainer()
-  const [priceIdentifiers, setPriceIdentifiers] = useState<string[]>([])
-  const [collateralTokens, setCollateralTokens] = useState<Token[]>([])
-  const [selectedPriceIdentifier, setSelectedPriceIdentifier] = useState<string>("")
-  const [selectedCollateralToken, setSelectedCollateralToken] = useState<Token | undefined>(undefined)
-  const [block$, setBlock$] = useState<Observable<Block> | null>(null)
-  const { getContractAddress, getContractInterface } = useUMARegistry()
+export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
+  children,
+}) => {
+  const { provider, signer } = Connection.useContainer();
+  const [priceIdentifiers, setPriceIdentifiers] = useState<string[]>([]);
+  const [collateralTokens, setCollateralTokens] = useState<Token[]>([]);
+  const [
+    selectedPriceIdentifier,
+    setSelectedPriceIdentifier,
+  ] = useState<string>("");
+  const [selectedCollateralToken, setSelectedCollateralToken] = useState<
+    Token | undefined
+  >(undefined);
+  const [block$, setBlock$] = useState<Observable<Block> | null>(null);
+  const { getContractAddress, getContractInterface } = useUMARegistry();
 
   // const getCollateralTokens = async () => {
   //   const address = getContractAddress("AddressWhitelist")
@@ -84,12 +105,14 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({ children 
     if (provider && signer) {
       const observable = new Observable<Block>((subscriber) => {
         provider.on("block", (blockNumber: number) => {
-          provider.getBlock(blockNumber).then((block) => subscriber.next(block))
-        })
-      })
+          provider
+            .getBlock(blockNumber)
+            .then((block) => subscriber.next(block));
+        });
+      });
       // debounce to prevent subscribers making unnecessary calls
-      const blockInstance = observable.pipe(debounceTime(1000))
-      setBlock$(blockInstance)
+      const blockInstance = observable.pipe(debounceTime(1000));
+      setBlock$(blockInstance);
 
       // getCollateralTokens()
       //   .then(() => console.log("Collateral retrieved"))
@@ -99,19 +122,19 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({ children 
       //   .then(() => console.log("Price identifiers retrieved"))
       //   .catch((error) => console.log("Error getPriceIdentifiers", error))
     }
-  }, [provider, signer]) // eslint-disable-line
+  }, [provider, signer]); // eslint-disable-line
 
   useEffect(() => {
     if (block$ && provider && signer) {
       const sub = block$.subscribe(async () => {
-        console.log("New block observable arrived")
+        console.log("New block observable arrived");
         // await getCollateralTokens()
         // await getPriceIdentifiers()
         // await getEMPAddresses()
-      })
-      return () => sub.unsubscribe()
+      });
+      return () => sub.unsubscribe();
     }
-  }, [block$]) // eslint-disable-line
+  }, [block$]); // eslint-disable-line
 
   return (
     <GlobalStateContext.Provider
@@ -121,21 +144,21 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({ children 
         selectedPriceIdentifier,
         setSelectedPriceIdentifier,
         selectedCollateralToken,
-        setSelectedCollateralToken
+        setSelectedCollateralToken,
       }}
     >
       {children}
     </GlobalStateContext.Provider>
-  )
-}
+  );
+};
 
 export const useGlobalState = () => {
-  const context = useContext(GlobalStateContext)
+  const context = useContext(GlobalStateContext);
 
   if (context === null) {
     throw new Error(
       "useGlobalState() can only be used inside of <GlobalStateProvider />, please declare it at a higher level"
-    )
+    );
   }
-  return context
-}
+  return context;
+};

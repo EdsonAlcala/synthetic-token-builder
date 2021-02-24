@@ -1,10 +1,10 @@
-import React from "react"
-import { Box, Button, Container, Grid, Typography } from "@material-ui/core"
+import React from "react";
+import { Box, Button, Container, Grid, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Connection from "../hooks/Connection";
-import UMALogo from '../images/uma-red-logo.png';
+import UMALogo from "../images/uma-red-logo.png";
 
 interface IProps {
   styled: {
@@ -14,12 +14,17 @@ interface IProps {
 
 const StyledTypography = styled(Typography)`
   font-weight: 400;
-`
+`;
 
 export const Header = () => {
   return (
     <Container maxWidth="lg">
-      <Grid container alignContent="space-between" alignItems="center" justify="space-between">
+      <Grid
+        container
+        alignContent="space-between"
+        alignItems="center"
+        justify="space-between"
+      >
         <Grid item>
           <Logo />
         </Grid>
@@ -28,23 +33,33 @@ export const Header = () => {
         </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
 const Logo = () => {
   return (
-
-    <Box display="flex" flexDirection="horizontal" justifyContent="center" alignItems="center">
+    <Box
+      display="flex"
+      flexDirection="horizontal"
+      justifyContent="center"
+      alignItems="center"
+    >
       <StyledLink to="/">
-        <img src={UMALogo} height="32px" width="32px" style={{ marginRight: "0.5em" }} alt="UMA logo in red" />
+        <img
+          src={UMALogo}
+          height="32px"
+          width="32px"
+          style={{ marginRight: "0.5em" }}
+          alt="UMA logo in red"
+        />
       </StyledLink>
       <StyledTypography>Token Builder</StyledTypography>
     </Box>
-  )
-}
+  );
+};
 
 const StyledLink = styled(Link)`
-    text-decoration: none;
+  text-decoration: none;
 `;
 
 const AddressBar = () => {
@@ -54,18 +69,23 @@ const AddressBar = () => {
   const networkName = network?.name === "homestead" ? "mainnet" : network?.name;
   const shortAddress = `${address?.substr(0, 10)}…${address?.substr(-9)}`;
 
-  return (<Box display="flex" alignItems="center">
-    {address && (
-      <AddressBox title={address || undefined}>
-        <div>{shortAddress}</div>
-      </AddressBox>
-    )}
-    {connected ? (
-      <ConnectButton variant="outlined" color="secondary" styled={{ connected }}>
-        <span style={{ color: "#8bc34a" }}>●</span>&nbsp;
-        {networkName}
-      </ConnectButton>
-    ) : (
+  return (
+    <Box display="flex" alignItems="center">
+      {address && (
+        <AddressBox title={address || undefined}>
+          <div>{shortAddress}</div>
+        </AddressBox>
+      )}
+      {connected ? (
+        <ConnectButton
+          variant="outlined"
+          color="secondary"
+          styled={{ connected }}
+        >
+          <span style={{ color: "#8bc34a" }}>●</span>&nbsp;
+          {networkName}
+        </ConnectButton>
+      ) : (
         <ConnectButton
           variant="outlined"
           color="secondary"
@@ -75,15 +95,17 @@ const AddressBar = () => {
           🦊 Connect
         </ConnectButton>
       )}
-  </Box>)
-}
+    </Box>
+  );
+};
 
 const ConnectButton = styled(Button)`
   padding-top: 8px;
   padding-bottom: 8px;
   pointer-events: ${({ styled }: IProps) =>
     styled.connected ? "none" : "unset"};
-  text-transform: ${({ styled }: IProps) => styled.connected ? 'capitalize' : 'uppercase'};
+  text-transform: ${({ styled }: IProps) =>
+    styled.connected ? "capitalize" : "uppercase"};
 `;
 
 const AddressBox = styled.div`

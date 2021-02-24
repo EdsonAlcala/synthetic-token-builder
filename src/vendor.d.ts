@@ -1,1 +1,1 @@
-declare module "@uma/core"
+declare module "@uma/core";

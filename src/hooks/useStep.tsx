@@ -1,15 +1,20 @@
-import React, { PropsWithChildren, useContext, useEffect, useState } from "react"
+import React, {
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 export interface StepDefinition {
-  route: string
-  order: number
-  name: string
-  key: string
+  route: string;
+  order: number;
+  name: string;
+  key: string;
 }
 
-type Step = StepDefinition[]
+type Step = StepDefinition[];
 
-export const DEFAULT_STEP = 0
+export const DEFAULT_STEP = 0;
 
 const STEPS: Step = [
   {
@@ -30,20 +35,20 @@ const STEPS: Step = [
     route: "create_expiring_multiparty",
     name: "Create expiring multiparty",
   },
-]
+];
 
 interface IStepProvider {
-  getAllSteps: () => Step
-  getNextStep: () => StepDefinition
-  currentStep: StepDefinition
-  getStepBefore: () => StepDefinition
-  isLastStep: () => boolean
-  goNextStep: () => void
-  goStepBefore: () => void
-  isCurrentStepCompleted: boolean
-  setCurrentStepCompleted: () => void
-  restart: () => void
-  getDefaultStep: () => StepDefinition
+  getAllSteps: () => Step;
+  getNextStep: () => StepDefinition;
+  currentStep: StepDefinition;
+  getStepBefore: () => StepDefinition;
+  isLastStep: () => boolean;
+  goNextStep: () => void;
+  goStepBefore: () => void;
+  isCurrentStepCompleted: boolean;
+  setCurrentStepCompleted: () => void;
+  restart: () => void;
+  getDefaultStep: () => StepDefinition;
 }
 
 /* tslint:disable */
@@ -60,83 +65,87 @@ const StepContext = React.createContext<IStepProvider>({
   setCurrentStepCompleted: () => {},
   restart: () => {},
   getDefaultStep: () => STEPS[DEFAULT_STEP],
-})
+});
 /* tslint:enable */
 
 export const StepProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(STEPS[DEFAULT_STEP])
-  const [isCurrentStepCompleted, setIsCurrentStepCompleted] = useState(false)
+  const [currentStep, setCurrentStep] = useState(STEPS[DEFAULT_STEP]);
+  const [isCurrentStepCompleted, setIsCurrentStepCompleted] = useState(false);
 
   const getNextStep = () => {
-    const result = getNextStepInternal()
+    const result = getNextStepInternal();
     if (!result) {
-      throw new Error("Invalid state, it shouldn't be called if there is not a next step")
+      throw new Error(
+        "Invalid state, it shouldn't be called if there is not a next step"
+      );
     }
-    return result
-  }
+    return result;
+  };
 
-  const getAllSteps = () => STEPS
+  const getAllSteps = () => STEPS;
 
   const isLastStep = () => {
-    const result = getNextStepInternal()
+    const result = getNextStepInternal();
     if (!result) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const getStepBefore = () => {
-    const allSteps = getAllSteps()
-    const currentOrder = currentStep.order
-    const stepBeforeOrder = currentOrder - 1
+    const allSteps = getAllSteps();
+    const currentOrder = currentStep.order;
+    const stepBeforeOrder = currentOrder - 1;
 
-    const result = allSteps.find((s) => s.order === stepBeforeOrder)
+    const result = allSteps.find((s) => s.order === stepBeforeOrder);
 
     if (!result) {
-      throw new Error("Invalid state, it shouldn't be called if there is not a step before")
+      throw new Error(
+        "Invalid state, it shouldn't be called if there is not a step before"
+      );
     }
-    return result
-  }
+    return result;
+  };
 
   const goNextStep = () => {
-    const nextStep = getNextStepInternal()
+    const nextStep = getNextStepInternal();
     if (!nextStep) {
-      throw new Error("There is not next step")
+      throw new Error("There is not next step");
     }
-    setCurrentStep(nextStep)
-  }
+    setCurrentStep(nextStep);
+  };
 
   const goStepBefore = () => {
-    const stepBefore = getStepBefore()
+    const stepBefore = getStepBefore();
     if (!stepBefore) {
-      throw new Error("There is not step before")
+      throw new Error("There is not step before");
     }
-    setCurrentStep(stepBefore)
-  }
+    setCurrentStep(stepBefore);
+  };
 
   const getNextStepInternal = () => {
-    const allSteps = getAllSteps()
-    const currentOrder = currentStep.order
-    const nextStepOrder = currentOrder + 1
+    const allSteps = getAllSteps();
+    const currentOrder = currentStep.order;
+    const nextStepOrder = currentOrder + 1;
 
-    return allSteps.find((s) => s.order === nextStepOrder)
-  }
+    return allSteps.find((s) => s.order === nextStepOrder);
+  };
 
   const setCurrentStepCompleted = () => {
-    setIsCurrentStepCompleted(true)
-  }
+    setIsCurrentStepCompleted(true);
+  };
 
   const restart = () => {
-    setCurrentStep(STEPS[DEFAULT_STEP])
-  }
+    setCurrentStep(STEPS[DEFAULT_STEP]);
+  };
 
   const getDefaultStep = () => {
-    return STEPS[DEFAULT_STEP]
-  }
+    return STEPS[DEFAULT_STEP];
+  };
 
   useEffect(() => {
-    setIsCurrentStepCompleted(false)
-  }, [currentStep])
+    setIsCurrentStepCompleted(false);
+  }, [currentStep]);
 
   return (
     <StepContext.Provider
@@ -156,14 +165,16 @@ export const StepProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     >
       {children}
     </StepContext.Provider>
-  )
-}
+  );
+};
 
 export const useStep = () => {
-  const context = useContext(StepContext)
+  const context = useContext(StepContext);
 
   if (context === null) {
-    throw new Error("useStep() can only be used inside of <StepProvider />, please declare it at a higher level")
+    throw new Error(
+      "useStep() can only be used inside of <StepProvider />, please declare it at a higher level"
+    );
   }
-  return context
-}
+  return context;
+};
