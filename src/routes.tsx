@@ -5,27 +5,30 @@ import { ErrorView, HomeView, SyntheticTokenBuilderView } from "./views"
 import { DefaultLayout } from "./layouts"
 import { TOKEN_BUILDER_ROUTE } from "./constants"
 import { ThemeProvider } from "styled-components"
-import { ThemeProvider as MaterialUIProvider, createMuiTheme } from "@material-ui/core/styles"
+import { ThemeProvider as MaterialUIProvider } from "@material-ui/core/styles"
 import { GlobalStateProvider } from "./hooks"
 
-import { theme } from "./theme"
+import { materialUITheme, theme } from "./theme"
 
 interface Props extends RouteProps {
   component: any // TODO: new (props: any) => React.Component
   from: string
 }
 
-const RouteWithDefaultLayout = ({ component: Component, ...rest }: Props) => {
-  const materialUITheme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: "dark",
-        }
-      }),
-    []
-  )
 
+const RouteWithDefaultLayout = ({ component: Component, ...rest }: Props) => {
+  // const materialUITheme = React.useMemo(
+  //   () =>
+  //     createMuiTheme({
+  //       palette: {
+  //         type: "dark",
+  //         background: {
+  //           default: 'black'
+  //         }
+  //       }
+  //     }),
+  //   []
+  // )
   return (
     <Route
       {...rest}

@@ -1,14 +1,28 @@
 import React from "react"
-import { Row, Container, Col } from "react-bootstrap"
+import { Box, Container, Grid } from "@material-ui/core"
+import { styled as materialUIStyled } from '@material-ui/core/styles';
+
+import { Header } from "../sections";
+
+const MainContainer = materialUIStyled(Grid)({
+  paddingRight: 0,
+  paddingLeft: 0,
+  height: '100%'
+})
 
 export const DefaultLayout: React.FC = ({ children }) => {
   return (
-    <Container fluid={true}>
-      <Row className="full-height">
-        <Col>
-          {children}
-        </Col>
-      </Row>
-    </Container>
+    <Box pt="1em">
+      <Container>
+        <MainContainer>
+          <Grid item>
+            <Header />
+          </Grid>
+          <Grid item>
+            {children}
+          </Grid>
+        </MainContainer>
+      </Container>
+    </Box>
   )
 }
