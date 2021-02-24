@@ -1,6 +1,6 @@
 import { Button, Container, Grid, styled as MaterialUIStyled, Typography } from '@material-ui/core'
 import React from 'react'
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import YouTube from 'react-youtube';
 import styled from 'styled-components';
 import { TOKEN_BUILDER_ROUTE } from '../constants';
@@ -55,4 +55,8 @@ export const HomeView: React.FC = () => {
 
 const StyledLink = styled(Link)`
     text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
 `;

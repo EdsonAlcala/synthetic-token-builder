@@ -1,7 +1,9 @@
 import React from "react"
 import { Nav } from "react-bootstrap"
+import { NavLink } from "react-router-dom"
 
 import styled from "styled-components"
+import { TOKEN_BUILDER_ROUTE } from "../constants"
 import { useStep, DEFAULT_STEP, StepDefinition } from "../hooks/useStep"
 
 export const NavMenu: React.FC = () => {
@@ -25,12 +27,12 @@ export const NavMenu: React.FC = () => {
           <StyledNavLink
             onClick={handleOnNavClick}
             key={index}
-          // to={`/tutorial/${currentStepDefinition.route}`}
-          // activeStyle={{
-          // opacity: 1,
-          // fontWeight: 500,
-          // fontSize: "0.9em",
-          // }}
+            to={`${TOKEN_BUILDER_ROUTE}/${currentStepDefinition.route}`}
+            activeStyle={{
+              opacity: 1,
+              fontWeight: 500,
+              fontSize: "1em",
+            }}
           >
             <Nav.Link as={StyledDiv} key={currentStepDefinition.key} href={currentStepDefinition.route} disabled={true}>
               <NumberContainer>
@@ -66,7 +68,7 @@ const CompletedIcon: React.FC = () => {
 
 const NumberContainer = styled.div`
   display: inline-flex;
-  background-color: #007bff;
+  background-color: #ff4a4a;
   width: 24px;
   height: 24px;
   text-align: center;
@@ -78,9 +80,10 @@ const NumberContainer = styled.div`
   justify-content: center;
 `
 
-const StyledNavLink = styled.a`
+const StyledNavLink = styled(NavLink)`
   color: black;
   opacity: 0.5;
+  line-height: 2.5em;
   &:hover {
     text-decoration: none;
     cursor: text;

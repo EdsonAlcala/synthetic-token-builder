@@ -9,7 +9,6 @@ import Connection from "../hooks/Connection"
 
 const Paragraph = styled.p`
   font-size: 0.9em;
-  color: ${(props) => props.theme.modalFontColor};
   font-weight: 300;
 `
 
@@ -38,10 +37,10 @@ export const RightPanel: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Paragraph>
+      {/* <Paragraph>
         <b>From</b>
       </Paragraph>
-      <Paragraph>{address}</Paragraph>
+      <Paragraph>{address}</Paragraph> */}
       <Paragraph>
         <b>Collateral Balance</b>
       </Paragraph>
@@ -98,7 +97,6 @@ const Image = styled.div`
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  color: white;
   margin-right: 1em;
 `
 
