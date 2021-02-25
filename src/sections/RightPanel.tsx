@@ -7,11 +7,6 @@ import styled from "styled-components";
 import { useGlobalState } from "../hooks/useGlobalState";
 import Connection from "../hooks/Connection";
 
-const Paragraph = styled.p`
-  font-size: 0.9em;
-  font-weight: 300;
-`;
-
 export const RightPanel: React.FC = () => {
   const { address } = Connection.useContainer();
   const { selectedCollateralToken, selectedPriceIdentifier } = useGlobalState();
@@ -37,14 +32,6 @@ export const RightPanel: React.FC = () => {
 
   return (
     <React.Fragment>
-      {/* <Paragraph>
-        <b>From</b>
-      </Paragraph>
-      <Paragraph>{address}</Paragraph> */}
-      <Paragraph>
-        <b>Collateral Balance</b>
-      </Paragraph>
-      <Paragraph>{collateralBalance}</Paragraph>
       {selectedCollateralToken && (
         <Card>
           <Card.Header>Selected collateral token</Card.Header>
@@ -56,17 +43,16 @@ export const RightPanel: React.FC = () => {
                   {selectedCollateralToken.name}
                 </span>
               </p>
-              <p>
-                Symbol: <span>{selectedCollateralToken.symbol}</span>
+              <p style={{ fontWeight: "bold" }}>
+                Symbol:{" "}
+                <span style={{ fontWeight: "lighter" }}>
+                  {selectedCollateralToken.symbol}
+                </span>
               </p>
-              <p>
-                Total supply:{" "}
-                <span>{selectedCollateralToken.totalSupply.toString()}</span>
-              </p>
-              <p>
-                Address:{" "}
-                <span style={{ fontSize: "0.8em" }}>
-                  {selectedCollateralToken.address}
+              <p style={{ fontWeight: "bold" }}>
+                Balance:{" "}
+                <span style={{ fontWeight: "lighter" }}>
+                  {collateralBalance}
                 </span>
               </p>
             </AccordionContentBody>
@@ -78,7 +64,6 @@ export const RightPanel: React.FC = () => {
           <Card.Header>Selected price identifier</Card.Header>
           <React.Fragment>
             <AccordionContentBody direction="horizontal">
-              <Image>{selectedPriceIdentifier.charAt(0)}</Image>
               <Description style={{ justifyContent: "center" }}>
                 <span>{selectedPriceIdentifier}</span>
               </Description>
@@ -98,7 +83,7 @@ const AccordionContentBody = styled.div<{ direction?: string }>`
 
 const Image = styled.div`
   display: flex;
-  background-color: #007bff;
+  background-color: #ff4a4a;
   width: 36px;
   height: 36px;
   border-radius: 50%;

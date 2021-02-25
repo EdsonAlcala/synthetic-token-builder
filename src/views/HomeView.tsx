@@ -54,10 +54,7 @@ export const HomeView: React.FC = () => {
         <Grid
           item={true}
           xs={6}
-          lg={6}
-          alignContent="center"
-          alignItems="center"
-        >
+          lg={6}>
           <YouTube opts={opts} videoId="Qe85PsrS7Ho" onReady={onReady} />
         </Grid>
       </Grid>

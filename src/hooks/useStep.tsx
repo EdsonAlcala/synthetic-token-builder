@@ -52,18 +52,17 @@ interface IStepProvider {
 }
 
 /* tslint:disable */
-// Default values
 const StepContext = React.createContext<IStepProvider>({
   getAllSteps: () => STEPS,
   getNextStep: () => STEPS[DEFAULT_STEP],
   currentStep: STEPS[DEFAULT_STEP],
   getStepBefore: () => STEPS[DEFAULT_STEP],
   isLastStep: () => false,
-  goNextStep: () => {},
-  goStepBefore: () => {},
+  goNextStep: () => { },
+  goStepBefore: () => { },
   isCurrentStepCompleted: false,
-  setCurrentStepCompleted: () => {},
-  restart: () => {},
+  setCurrentStepCompleted: () => { },
+  restart: () => { },
   getDefaultStep: () => STEPS[DEFAULT_STEP],
 });
 /* tslint:enable */
@@ -124,8 +123,11 @@ export const StepProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   };
 
   const getNextStepInternal = () => {
+    console.log("ASD")
     const allSteps = getAllSteps();
+    console.log("ASD")
     const currentOrder = currentStep.order;
+    console.log("Current order", currentOrder)
     const nextStepOrder = currentOrder + 1;
 
     return allSteps.find((s) => s.order === nextStepOrder);

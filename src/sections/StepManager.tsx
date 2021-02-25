@@ -23,9 +23,6 @@ export const StepManager: React.FC = () => {
   return (
     <Box pl="1.5em" pr="1.5em">
       <Switch>
-        <Route path={`${match.path}/${SELECT_COLLATERAL_TOKEN}`}>
-          <SelectCollateralToken />
-        </Route>
 
         <Route path={`${match.path}/${SELECT_PRICE_IDENTIFIER}`}>
           <SelectPriceIdentifier />
@@ -33,6 +30,10 @@ export const StepManager: React.FC = () => {
 
         <Route path={`${match.path}/${CREATE_EXPIRING_MULTIPARTY}`}>
           <CreateExpiringMultiParty />
+        </Route>
+
+        <Route path={`${match.path}/${SELECT_COLLATERAL_TOKEN}`}>
+          <SelectCollateralToken />
         </Route>
       </Switch>
     </Box>
