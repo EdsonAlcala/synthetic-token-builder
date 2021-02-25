@@ -2,33 +2,32 @@ import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
-// import TestnetERC20Artifact from "@uma/core/build/contracts/TestnetERC20.json"
+import TestnetERC20Artifact from "@uma/core/build/contracts/TestnetERC20.json"
 
 import { useGlobalState } from "../hooks/useGlobalState";
 import Connection from "../hooks/Connection";
+import { BigNumber, ethers } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 
 export const RightPanel: React.FC = () => {
-  const { address } = Connection.useContainer();
+  const { address, provider } = Connection.useContainer();
   const { selectedCollateralToken, selectedPriceIdentifier } = useGlobalState();
   const [collateralBalance, setCollateralBalance] = useState("0");
 
-  // TODO: When collateral changes, show balance in the right panel..
-
-  // useEffect(() => {
-  //   if (selectedCollateralToken && selectedCollateralToken.address && signer) {
-  //     const getBalance = async () => {
-  //       const testnetERC20Contract = new ethers.Contract(
-  //         selectedCollateralToken.address as string,
-  //         TestnetERC20Artifact.abi,
-  //         signer
-  //       )
-  //       const currentAccount = await signer.getAddress()
-  //       const balance: BigNumber = await testnetERC20Contract.balanceOf(currentAccount)
-  //       setCollateralBalance(`${formatUnits(balance, "ether").toString()}`)
-  //     }
-  //     getBalance()
-  //   }
-  // }, [selectedCollateralToken, signer])
+  useEffect(() => {
+    if (selectedCollateralToken && selectedCollateralToken.address && provider) {
+      const getBalance = async () => {
+        const testnetERC20Contract = new ethers.Contract(
+          selectedCollateralToken.address,
+          TestnetERC20Artifact.abi,
+          provider
+        )
+        const balance: BigNumber = await testnetERC20Contract.balanceOf(address)
+        setCollateralBalance(`${formatUnits(balance, "ether").toString()}`)
+      }
+      getBalance()
+    }
+  }, [selectedCollateralToken, provider])
 
   return (
     <React.Fragment>
