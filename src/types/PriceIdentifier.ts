@@ -1,4 +1,4 @@
 export interface PriceIdentifierData {
-    id: string,
-    isSupported: boolean
+  id: string;
+  isSupported: boolean;
 }

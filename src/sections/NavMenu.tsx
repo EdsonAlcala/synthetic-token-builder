@@ -25,7 +25,7 @@ export const NavMenu: React.FC = () => {
           <StyledNavLink
             onClick={handleOnNavClick}
             key={index}
-            style={{ pointerEvents: 'none' }}
+            style={{ pointerEvents: "none" }}
             to={`${TOKEN_BUILDER_ROUTE}/${currentStepDefinition.route}`}
             activeStyle={{
               opacity: 1,
@@ -44,8 +44,8 @@ export const NavMenu: React.FC = () => {
                 {currentStep.order > currentStepDefinition.order ? (
                   <CompletedIcon />
                 ) : (
-                    <span>{currentStepDefinition.order}</span>
-                  )}
+                  <span>{currentStepDefinition.order}</span>
+                )}
               </NumberContainer>
               {text}
             </Nav.Link>

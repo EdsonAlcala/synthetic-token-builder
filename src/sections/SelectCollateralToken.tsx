@@ -16,15 +16,18 @@ import { useHistory } from "react-router-dom";
 import { DEFAULT_SELECT_VALUE } from "../constants";
 
 export interface CollateralResponse {
-  tokens: TokenData[]
+  tokens: TokenData[];
 }
 
 export const SelectCollateralToken = () => {
   const { network } = Connection.useContainer();
-  const history = useHistory()
-  const { getNextStep, goNextStep } = useStep()
+  const history = useHistory();
+  const { getNextStep, goNextStep } = useStep();
 
-  const { selectedCollateralToken, setSelectedCollateralToken } = useGlobalState();
+  const {
+    selectedCollateralToken,
+    setSelectedCollateralToken,
+  } = useGlobalState();
   // const classes = useStyles();
 
   const [collateralTokens, setCollateralTokens] = useState<TokenData[]>([]);
@@ -40,7 +43,6 @@ export const SelectCollateralToken = () => {
         setSelectedCollateralToken(selectedToken);
       }
     }
-
   };
 
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
@@ -48,21 +50,20 @@ export const SelectCollateralToken = () => {
     context: { clientName: subgraphToQuery },
     pollInterval: 10000,
     onCompleted: ({ tokens }: CollateralResponse) => {
-      console.log("DATA COLLATERAL", tokens)
-      setCollateralTokens(tokens)
-    }
+      console.log("DATA COLLATERAL", tokens);
+      setCollateralTokens(tokens);
+    },
   });
-
 
   const handleOnNextClick = () => {
     debugger;
-    const nextStep = getNextStep()
+    const nextStep = getNextStep();
     if (nextStep) {
-      goNextStep()
-      console.log("nextStep.route", nextStep.route)
-      history.push(nextStep.route)
+      goNextStep();
+      console.log("nextStep.route", nextStep.route);
+      history.push(nextStep.route);
     }
-  }
+  };
 
   return (
     <Box>
@@ -80,8 +81,15 @@ export const SelectCollateralToken = () => {
                 as="select"
                 disabled={collateralTokens.length === 0}
                 onChange={handleSelectChange}
-                value={selectedCollateralToken ? selectedCollateralToken.address : DEFAULT_SELECT_VALUE}>
-                {collateralTokens.length === 0 && <option>No collateral tokens</option>}
+                value={
+                  selectedCollateralToken
+                    ? selectedCollateralToken.address
+                    : DEFAULT_SELECT_VALUE
+                }
+              >
+                {collateralTokens.length === 0 && (
+                  <option>No collateral tokens</option>
+                )}
                 <option value={DEFAULT_SELECT_VALUE}>Select an option</option>
                 {collateralTokens.length > 0 &&
                   collateralTokens.map((item, index) => {
@@ -89,7 +97,7 @@ export const SelectCollateralToken = () => {
                       <option key={index} value={item.address}>
                         {item.name}
                       </option>
-                    )
+                    );
                   })}
               </Form.Control>
             </Col>
@@ -99,9 +107,10 @@ export const SelectCollateralToken = () => {
             <StyledButton
               disabled={selectedCollateralToken === undefined}
               variant="danger"
-              onClick={handleOnNextClick}>
+              onClick={handleOnNextClick}
+            >
               Next
-              </StyledButton>
+            </StyledButton>
           </div>
         </Form>
       </Box>

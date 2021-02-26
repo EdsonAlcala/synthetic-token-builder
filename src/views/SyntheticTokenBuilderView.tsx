@@ -22,8 +22,8 @@ export const SyntheticTokenBuilderView: React.FC = () => {
           {connected ? (
             <TokenBuilderSection />
           ) : (
-              <Typography>Connect to a network</Typography>
-            )}
+            <Typography>Connect to a network</Typography>
+          )}
         </Box>
       </Box>
     </Container>

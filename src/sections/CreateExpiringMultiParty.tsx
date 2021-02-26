@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import { Box, makeStyles, styled, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { Formik, Form, FormikErrors } from "formik"
-import { BigNumber, ethers, utils } from "ethers"
+import { Formik, Form, FormikErrors } from "formik";
+import { BigNumber, ethers, utils } from "ethers";
 
-import { Button, ErrorMessage, FormItem, StyledButton, StyledTitle, SuccessMessage } from "../components";
+import {
+  Button,
+  ErrorMessage,
+  FormItem,
+  StyledButton,
+  StyledTitle,
+  SuccessMessage,
+} from "../components";
 import { useGlobalState, useStep, useUMARegistry } from "../hooks";
 import Connection from "../hooks/Connection";
 
-import "react-datetime/css/react-datetime.css"
+import "react-datetime/css/react-datetime.css";
 
 interface FormProps {
-  expirationTimestamp: string
-  syntheticName: string
-  syntheticSymbol: string
-  collateralRequirement: string
-  disputeBond: string
-  minSponsorTokens: string
-  withdrawalLiveness: string
-  liquidationLiveness: string
+  expirationTimestamp: string;
+  syntheticName: string;
+  syntheticSymbol: string;
+  collateralRequirement: string;
+  disputeBond: string;
+  minSponsorTokens: string;
+  withdrawalLiveness: string;
+  liquidationLiveness: string;
 }
 
 const initialValues: FormProps = {
@@ -30,32 +37,33 @@ const initialValues: FormProps = {
   minSponsorTokens: "",
   withdrawalLiveness: "",
   liquidationLiveness: "",
-}
+};
 
 export const CreateExpiringMultiParty = () => {
-  const { provider, signer } = Connection.useContainer()
-  const { selectedPriceIdentifier, selectedCollateralToken } = useGlobalState()
-  const { getContractAddress } = useUMARegistry()
-  const { setCurrentStepCompleted, getStepBefore, goStepBefore } = useStep()
-  const [newEMPAddress, setNewEMPAddress] = useState<string | undefined>(undefined)
-  const [error, setError] = useState<string | undefined>(undefined)
-  const [empHasBeenCreated, setEMPHasBeenCreated] = useState(false)
+  const { provider, signer } = Connection.useContainer();
+  const { selectedPriceIdentifier, selectedCollateralToken } = useGlobalState();
+  const { getContractAddress } = useUMARegistry();
+  const { setCurrentStepCompleted, getStepBefore, goStepBefore } = useStep();
+  const [newEMPAddress, setNewEMPAddress] = useState<string | undefined>(
+    undefined
+  );
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [empHasBeenCreated, setEMPHasBeenCreated] = useState(false);
 
-  const history = useHistory()
+  const history = useHistory();
 
   const handleOnBackClick = () => {
-    const stepBefore = getStepBefore()
+    const stepBefore = getStepBefore();
     if (stepBefore) {
-      goStepBefore()
-      console.log("stepBefore.route", stepBefore.route)
-      history.push(stepBefore.route)
+      goStepBefore();
+      console.log("stepBefore.route", stepBefore.route);
+      history.push(stepBefore.route);
     }
-  }
+  };
 
   const handleSubmit = (values: FormProps, { setSubmitting }: any) => {
-    setError(undefined)
-
-  }
+    setError(undefined);
+  };
 
   return (
     <Box>
@@ -64,44 +72,44 @@ export const CreateExpiringMultiParty = () => {
       <Formik
         initialValues={initialValues}
         validate={(values) => {
-          const errors: FormikErrors<FormProps> = {}
+          const errors: FormikErrors<FormProps> = {};
           if (!values.expirationTimestamp) {
-            errors.expirationTimestamp = "Required"
+            errors.expirationTimestamp = "Required";
           }
 
           if (!values.syntheticName) {
-            errors.syntheticName = "Required"
+            errors.syntheticName = "Required";
           }
 
           if (!values.syntheticSymbol) {
-            errors.syntheticSymbol = "Required"
+            errors.syntheticSymbol = "Required";
           }
 
           if (!values.collateralRequirement) {
-            errors.collateralRequirement = "Required"
+            errors.collateralRequirement = "Required";
           } else if (parseInt(values.collateralRequirement, 10) < 100) {
-            errors.collateralRequirement = "Value should be higher than 100"
+            errors.collateralRequirement = "Value should be higher than 100";
           }
 
           if (!values.minSponsorTokens) {
-            errors.minSponsorTokens = "Required"
+            errors.minSponsorTokens = "Required";
           } else if (parseInt(values.minSponsorTokens, 10) < 0) {
-            errors.minSponsorTokens = "Value cannot be negative"
+            errors.minSponsorTokens = "Value cannot be negative";
           }
 
           if (!values.withdrawalLiveness) {
-            errors.withdrawalLiveness = "Required"
+            errors.withdrawalLiveness = "Required";
           } else if (parseInt(values.withdrawalLiveness, 10) < 0) {
-            errors.withdrawalLiveness = "Value cannot be negative"
+            errors.withdrawalLiveness = "Value cannot be negative";
           }
 
           if (!values.liquidationLiveness) {
-            errors.liquidationLiveness = "Required"
+            errors.liquidationLiveness = "Required";
           } else if (parseInt(values.liquidationLiveness, 10) < 0) {
-            errors.liquidationLiveness = "Value cannot be negative"
+            errors.liquidationLiveness = "Value cannot be negative";
           }
 
-          return errors
+          return errors;
         }}
         onSubmit={handleSubmit}
       >
@@ -178,10 +186,14 @@ export const CreateExpiringMultiParty = () => {
             />
 
             {!empHasBeenCreated && (
-              <div style={{ display: "flex", paddingRight: "2.5em", marginTop: "1em", marginBottom: "2em" }}>
-
-
-
+              <div
+                style={{
+                  display: "flex",
+                  paddingRight: "2.5em",
+                  marginTop: "1em",
+                  marginBottom: "2em",
+                }}
+              >
                 <Button
                   variant="danger"
                   type="submit"
@@ -191,19 +203,24 @@ export const CreateExpiringMultiParty = () => {
                   loadingText="Creating..."
                   text="Create"
                 />
-                <StyledButton style={{ color: 'black' }} variant="link" onClick={handleOnBackClick}>
+                <StyledButton
+                  style={{ color: "black" }}
+                  variant="link"
+                  onClick={handleOnBackClick}
+                >
                   Back
                 </StyledButton>
               </div>
             )}
 
             <SuccessMessage show={empHasBeenCreated}>
-              You have successfully deployed the expiring multiparty contract {newEMPAddress}
+              You have successfully deployed the expiring multiparty contract{" "}
+              {newEMPAddress}
             </SuccessMessage>
             <ErrorMessage show={error !== undefined}>{error}</ErrorMessage>
           </Form>
         )}
       </Formik>
     </Box>
-  )
-}
+  );
+};

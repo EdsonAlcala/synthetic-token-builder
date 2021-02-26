@@ -15,23 +15,28 @@ const defaultCollateral: TokenData = {
   symbol: "WETH",
   decimals: 18,
   address: "0x1",
-  isOnWhitelist: true
+  isOnWhitelist: true,
 };
 
 /* tslint:disable */
 const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultCollateral,
-  setSelectedCollateralToken: () => { },
-  setSelectedPriceIdentifier: () => { },
+  setSelectedCollateralToken: () => {},
+  setSelectedPriceIdentifier: () => {},
 });
 /* tslint:enable */
 
 export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const [selectedPriceIdentifier, setSelectedPriceIdentifier] = useState<string>(DEFAULT_SELECT_VALUE);
-  const [selectedCollateralToken, setSelectedCollateralToken] = useState<TokenData | undefined>(undefined);
+  const [
+    selectedPriceIdentifier,
+    setSelectedPriceIdentifier,
+  ] = useState<string>(DEFAULT_SELECT_VALUE);
+  const [selectedCollateralToken, setSelectedCollateralToken] = useState<
+    TokenData | undefined
+  >(undefined);
 
   return (
     <GlobalStateContext.Provider

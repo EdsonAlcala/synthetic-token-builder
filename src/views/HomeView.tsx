@@ -51,10 +51,7 @@ export const HomeView: React.FC = () => {
             </GetStartedButton>
           </StyledLink>
         </Grid>
-        <Grid
-          item={true}
-          xs={6}
-          lg={6}>
+        <Grid item={true} xs={6} lg={6}>
           <YouTube opts={opts} videoId="Qe85PsrS7Ho" onReady={onReady} />
         </Grid>
       </Grid>
