@@ -30,11 +30,11 @@ export const SelectPriceIdentifier = () => {
     if (e.target.value === DEFAULT_SELECT_VALUE) {
       setSelectedPriceIdentifier(DEFAULT_SELECT_VALUE);
     } else {
-      const selectedPriceIdentifier = allPriceIdentifiers.find(
+      const newselectedPriceIdentifier = allPriceIdentifiers.find(
         (s) => s.id === e.target.value
       );
-      if (selectedPriceIdentifier) {
-        setSelectedPriceIdentifier(selectedPriceIdentifier.id);
+      if (newselectedPriceIdentifier) {
+        setSelectedPriceIdentifier(newselectedPriceIdentifier.id);
       }
     }
   };

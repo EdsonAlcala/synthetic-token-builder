@@ -56,7 +56,6 @@ export const SelectCollateralToken = () => {
   });
 
   const handleOnNextClick = () => {
-    debugger;
     const nextStep = getNextStep();
     if (nextStep) {
       goNextStep();
