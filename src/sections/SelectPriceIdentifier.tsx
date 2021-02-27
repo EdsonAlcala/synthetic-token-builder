@@ -42,6 +42,7 @@ export const SelectPriceIdentifier = () => {
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
   const { loading, error, data } = useQuery(PRICE_IDENTIFIERS, {
     context: { clientName: subgraphToQuery },
+    skip: !network,
     pollInterval: 10000,
     onCompleted: ({ priceIdentifiers }: PriceIdentifierResponse) => {
       const priceIdentifiersResult = priceIdentifiers.map((item) => {

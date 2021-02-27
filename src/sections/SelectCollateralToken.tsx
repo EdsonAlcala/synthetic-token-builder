@@ -47,6 +47,7 @@ export const SelectCollateralToken = () => {
 
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
   const { loading, error, data } = useQuery(COLLATERALS, {
+    skip: !network,
     context: { clientName: subgraphToQuery },
     pollInterval: 10000,
     onCompleted: ({ tokens }: CollateralResponse) => {
