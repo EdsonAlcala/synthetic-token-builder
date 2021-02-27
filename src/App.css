@@ -5,3 +5,8 @@ html, body, #root  {
 body {
   margin: 0;
 }
+
+.red {
+  color: red;
+  font-size: 0.8em;
+}
