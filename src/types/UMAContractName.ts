@@ -21,3 +21,7 @@ export type UMAContractName =
   | "ExpiringMultiPartyCreator"
   | "PerpetualLib"
   | "PerpetualCreator";
+
+export type Percentage = number
+
+export type Timestamp = number
