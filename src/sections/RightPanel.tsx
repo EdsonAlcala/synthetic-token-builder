@@ -8,6 +8,7 @@ import { useGlobalState } from "../hooks/useGlobalState";
 import Connection from "../hooks/Connection";
 import { BigNumber, ethers } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
+import { DEFAULT_SELECT_VALUE } from "../constants";
 
 export const RightPanel: React.FC = () => {
   const { address, provider } = Connection.useContainer();
@@ -64,7 +65,7 @@ export const RightPanel: React.FC = () => {
           </React.Fragment>
         </Card>
       )}
-      {selectedPriceIdentifier && (
+      {selectedPriceIdentifier !== DEFAULT_SELECT_VALUE && (
         <Card>
           <Card.Header>Selected price identifier</Card.Header>
           <React.Fragment>
