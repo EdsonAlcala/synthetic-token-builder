@@ -14,16 +14,17 @@ export const SyntheticTokenBuilderView: React.FC = () => {
       <Box marginTop="6em">
         <Box
           border="1px solid #fa4a4a"
-          height="70vh"
+          minHeight="70vh"
           display="flex"
           justifyContent="center"
-          alignItems="center"
         >
           {connected ? (
             <TokenBuilderSection />
           ) : (
-            <Typography>Connect to a network</Typography>
-          )}
+              <Box display="flex" height="70vh" justifyContent="center" alignItems="center">
+                <Typography>Connect to a network</Typography>
+              </Box>
+            )}
         </Box>
       </Box>
     </Container>
