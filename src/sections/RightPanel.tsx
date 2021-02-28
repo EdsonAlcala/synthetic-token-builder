@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
-import TestnetERC20Artifact from "@uma/core/build/contracts/TestnetERC20.json";
+import ERC20Artifact from "@uma/core/build/contracts/ERC20.json"
 
 import { useGlobalState } from "../hooks/useGlobalState";
 import Connection from "../hooks/Connection";
@@ -24,7 +24,7 @@ export const RightPanel: React.FC = () => {
       const getBalance = async () => {
         const testnetERC20Contract = new ethers.Contract(
           selectedCollateralToken.address,
-          TestnetERC20Artifact.abi,
+          ERC20Artifact.abi,
           provider
         );
         const balance: BigNumber = await testnetERC20Contract.balanceOf(
