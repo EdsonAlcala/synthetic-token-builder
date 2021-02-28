@@ -19,6 +19,7 @@ export type UMAContractName =
   | "OptimisticOracle"
   | "ExpiringMultiPartyLib"
   | "ExpiringMultiPartyCreator"
+  | "ExpiringMultiParty"
   | "PerpetualLib"
   | "PerpetualCreator"
   | "ERC20";

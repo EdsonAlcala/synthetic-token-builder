@@ -71,28 +71,22 @@ export const deployEMP = async (values: EMPParameters, network: ethers.providers
 
     console.log("expiringMultipartyCreatorAddress", expiringMultipartyCreatorAddress)
 
-    try {
+    const expiringMultipartyCreator = new ethers.Contract(
+        expiringMultipartyCreatorAddress,
+        expiringMultipartyCreatorInterface,
+        signer
+    )
 
-        const expiringMultipartyCreator = new ethers.Contract(
-            expiringMultipartyCreatorAddress,
-            expiringMultipartyCreatorInterface,
-            signer
-        )
+    const expiringMultiPartyAddress = await expiringMultipartyCreator.callStatic.createExpiringMultiParty(params)
+    console.log("expiringMultiPartyAddress", expiringMultiPartyAddress)
 
-        const expiringMultiPartyAddress = await expiringMultipartyCreator.callStatic.createExpiringMultiParty(params)
-        console.log("expiringMultiPartyAddress", expiringMultiPartyAddress)
+    const txn = await expiringMultipartyCreator.createExpiringMultiParty(params)
 
-        const txn = await expiringMultipartyCreator.createExpiringMultiParty(params)
+    const receipt: ContractReceipt = await txn.wait()
 
-        const receipt: ContractReceipt = await txn.wait()
+    console.log("Receipt", receipt)
 
-        console.log("Receipt", receipt)
-
-        return receipt
-
-    } catch (error) {
-        console.log("Error", error)
-    }
+    return { receipt, expiringMultiPartyAddress }
 
 }
 
