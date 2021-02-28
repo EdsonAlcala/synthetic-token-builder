@@ -4,7 +4,6 @@ import { toWei } from 'web3-utils'
 import { EthereumAddress, Percentage, Timestamp } from "../types"
 import { getUMAAbis } from "./umaAbis"
 import { getUMAAddresses } from "./umaAddresses"
-import { getAddress } from "@uma/core";
 
 export interface EMPParameters {
     expirationTimestamp: Timestamp

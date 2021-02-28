@@ -11,7 +11,7 @@ export enum Status {
   Stopped = "Stopped",
 }
 
-const PRIV_KEY = "0x316a0b2942f16ccb1bc3eb8babb03e64190bcc89913f52642f8f4e10079c9a88"
+const PRIV_KEY = "0x316a0b2942f16ccb1bc3eb8babb03e64190bcc89913f52642f8f4e10079c9a88" // TODO: Remove
 
 const getForkUrl: () => string = () => {
   if (process.env.FORK_MODE === KOVAN_NETWORK) {
@@ -43,7 +43,7 @@ export class Ganache {
     _chainId: getNetworkId(),
     _chainIdRpc: getNetworkId(),
     network_id: getNetworkId(),
-    gasLimit: "0x6691b7",
+    gasLimit: 20000000,
     allowUnlimitedContractSize: true,
     fork: getForkUrl(),
     accounts: [
@@ -80,10 +80,9 @@ export class Ganache {
         console.log(`\nTest chain started on port ${this.options.port}, listening...`);
 
         // get dai
-        // const provider = new ethers.providers.JsonRpcProvider();
-        // const wallet = new ethers.Wallet(PRIV_KEY);
-        // await getDai(wallet.connect(provider));
-        // console.log("Got DAI!")
+        const provider = new ethers.providers.JsonRpcProvider("http://localhost:8549");
+        const wallet = new ethers.Wallet(PRIV_KEY);
+        await getDai(wallet.connect(provider));
         resolve(blockchain);
       });
     });

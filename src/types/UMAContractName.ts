@@ -20,7 +20,8 @@ export type UMAContractName =
   | "ExpiringMultiPartyLib"
   | "ExpiringMultiPartyCreator"
   | "PerpetualLib"
-  | "PerpetualCreator";
+  | "PerpetualCreator"
+  | "ERC20";
 
 export type Percentage = number
 
