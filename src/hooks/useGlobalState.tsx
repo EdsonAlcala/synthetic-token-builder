@@ -2,12 +2,15 @@ import React, { PropsWithChildren, useContext, useState } from "react";
 
 import { DEFAULT_SELECT_VALUE } from "../constants";
 import { TokenData } from "../types";
+import { useStep } from "./useStep";
 
 interface IGlobalStateProvider {
   setSelectedCollateralToken: (token?: TokenData) => void;
   selectedCollateralToken?: TokenData;
   setSelectedPriceIdentifier: (priceIdentifier: string) => void;
   selectedPriceIdentifier: string;
+  empAddress?: string
+  setEmpAddress: (newAddress: string) => void
 }
 
 const defaultCollateral: TokenData = {
@@ -22,8 +25,10 @@ const defaultCollateral: TokenData = {
 const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultCollateral,
-  setSelectedCollateralToken: () => {},
-  setSelectedPriceIdentifier: () => {},
+  setSelectedCollateralToken: () => { },
+  setSelectedPriceIdentifier: () => { },
+  empAddress: "",
+  setEmpAddress: () => { }
 });
 /* tslint:enable */
 
@@ -38,6 +43,7 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
     TokenData | undefined
   >(undefined);
 
+  const [empAddress, setEmpAddress] = useState<string | undefined>(undefined)
   return (
     <GlobalStateContext.Provider
       value={{
@@ -45,6 +51,8 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
         setSelectedPriceIdentifier,
         selectedCollateralToken,
         setSelectedCollateralToken,
+        empAddress,
+        setEmpAddress
       }}
     >
       {children}
