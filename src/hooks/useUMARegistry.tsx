@@ -65,7 +65,7 @@ export const UMARegistryProvider: React.FC<PropsWithChildren<{}>> = ({
       const umaABIs = getUMAAbis();
       setABIs(umaABIs);
     }
-  }, []);
+  }, [network]);
 
   return (
     <UMAContext.Provider
