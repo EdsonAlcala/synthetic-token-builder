@@ -46,10 +46,10 @@ export const deployEMP = async (
 
   const params = {
     expirationTimestamp: BigNumber.from(expirationTimestamp),
-    collateralAddress: collateralAddress,
+    collateralAddress,
     priceFeedIdentifier: utils.formatBytes32String(priceFeedIdentifier),
-    syntheticName: syntheticName,
-    syntheticSymbol: syntheticSymbol,
+    syntheticName,
+    syntheticSymbol,
     collateralRequirement: {
       rawValue: toWei(`${collateralRequirement / 100}`),
     },
@@ -71,7 +71,7 @@ export const deployEMP = async (
     },
     liquidationLiveness: BigNumber.from(values.liquidationLiveness),
     withdrawalLiveness: BigNumber.from(values.withdrawalLiveness),
-    excessTokenBeneficiary: excessTokenBeneficiary, // i,e UMA Store contract.
+    excessTokenBeneficiary, // i,e UMA Store contract.
   };
 
   console.log("Params", params);

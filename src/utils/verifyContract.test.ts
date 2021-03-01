@@ -77,10 +77,14 @@ describe("Verify Contract Tests", () => {
       expandedERC20Bytecode,
       newWalletInstance
     );
-    // const contract = await expandedERC20Factory.deploy("EdToken", "EdToken", 18);
-    // contract.deployTransaction.wait()
+    const contract = await expandedERC20Factory.deploy(
+      "EdToken",
+      "EdToken",
+      18
+    );
+    contract.deployTransaction.wait();
 
-    // contractAddress = contract.contractAddress
+    contractAddress = contract.contractAddress;
     // console.log("contractAddress", contract.contractAddress)
   });
 

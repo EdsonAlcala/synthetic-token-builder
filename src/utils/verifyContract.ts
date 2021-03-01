@@ -38,7 +38,7 @@ export const verifyOnEtherscan = async (params: VerificationParameters) => {
     module: "contract", // Do not change
     action: "verifysourcecode", // Do not change
     contractaddress: contractAddress, // Contract Address starts with 0x...
-    sourceCode: sourceCode,
+    sourceCode,
     contractname: contractName,
     compilerversion: compilerVersion, // see http://etherscan.io/solcversions for list of support versions
     // optimizationUsed: optimizationEnabled

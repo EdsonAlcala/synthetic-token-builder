@@ -112,7 +112,7 @@ export const CreateExpiringMultiParty = () => {
         setSelectedCollateralToken(undefined);
         setSelectedPriceIdentifier(DEFAULT_SELECT_VALUE);
       })
-      .catch((error) => {
+      .catch((err) => {
         setError("Something unexpected happened. Please refresh and try again");
         setSubmitting(false);
       });
