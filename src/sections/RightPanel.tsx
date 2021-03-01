@@ -39,7 +39,7 @@ export const RightPanel: React.FC = () => {
   return (
     <React.Fragment>
       {selectedCollateralToken && (
-        <Card>
+        <Card >
           <Card.Header>Selected collateral token</Card.Header>
           <React.Fragment>
             <AccordionContentBody className="borderBottomExceptLast">
@@ -66,10 +66,10 @@ export const RightPanel: React.FC = () => {
         </Card>
       )}
       {selectedPriceIdentifier !== DEFAULT_SELECT_VALUE && (
-        <Card>
+        <Card style={{ borderTop: "none" }}>
           <Card.Header>Selected price identifier</Card.Header>
           <React.Fragment>
-            <AccordionContentBody direction="horizontal">
+            <AccordionContentBody className="borderBottomExceptLast" direction="horizontal">
               <Description style={{ justifyContent: "center" }}>
                 <span>{selectedPriceIdentifier}</span>
               </Description>
@@ -85,17 +85,7 @@ const AccordionContentBody = styled.div<{ direction?: string }>`
   display: flex;
   padding: 0.5em 1em;
   flex-direction: ${(props) => props.direction || "column"};
-`;
-
-const Image = styled.div`
-  display: flex;
-  background-color: #ff4a4a;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1em;
+  font-size: 0.8em;
 `;
 
 const Description = styled.div`

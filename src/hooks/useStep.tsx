@@ -34,13 +34,13 @@ const STEPS: Step = [
     order: 3,
     route: "create_expiring_multiparty",
     name: "Create expiring multiparty",
-  },
-  {
-    key: "mint",
-    order: 4,
-    route: "mint",
-    name: "Mint",
-  },
+  }
+  // {
+  //   key: "mint",
+  //   order: 4,
+  //   route: "mint",
+  //   name: "Mint",
+  // },
 ];
 
 interface IStepProvider {

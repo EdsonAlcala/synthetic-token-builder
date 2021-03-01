@@ -1,24 +1,24 @@
+import { BigNumber, ethers } from "ethers";
 import React, { PropsWithChildren, useContext, useState } from "react";
 
 import { DEFAULT_SELECT_VALUE } from "../constants";
-import { TokenData } from "../types";
-import { useStep } from "./useStep";
+import { TokenDataResponse } from "../types";
 
 interface IGlobalStateProvider {
-  setSelectedCollateralToken: (token?: TokenData) => void;
-  selectedCollateralToken?: TokenData;
+  setSelectedCollateralToken: (token?: TokenDataResponse) => void;
+  selectedCollateralToken?: TokenDataResponse;
   setSelectedPriceIdentifier: (priceIdentifier: string) => void;
   selectedPriceIdentifier: string;
   empAddress?: string
   setEmpAddress: (newAddress: string) => void
 }
 
-const defaultCollateral: TokenData = {
+const defaultCollateral: TokenDataResponse = {
   name: "WETH",
   symbol: "WETH",
   decimals: 18,
-  address: "0x1",
-  isOnWhitelist: true,
+  address: "0x0",
+  isOnWhitelist: true
 };
 
 /* tslint:disable */
@@ -40,7 +40,7 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
     setSelectedPriceIdentifier,
   ] = useState<string>(DEFAULT_SELECT_VALUE);
   const [selectedCollateralToken, setSelectedCollateralToken] = useState<
-    TokenData | undefined
+    TokenDataResponse | undefined
   >(undefined);
 
   const [empAddress, setEmpAddress] = useState<string | undefined>(undefined)

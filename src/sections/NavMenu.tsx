@@ -44,8 +44,8 @@ export const NavMenu: React.FC = () => {
                 {currentStep.order > currentStepDefinition.order ? (
                   <CompletedIcon />
                 ) : (
-                  <span>{currentStepDefinition.order}</span>
-                )}
+                    <span>{currentStepDefinition.order}</span>
+                  )}
               </NumberContainer>
               {text}
             </Nav.Link>
@@ -88,12 +88,13 @@ const NumberContainer = styled.div`
 const StyledNavLink = styled(NavLink)`
   color: black;
   opacity: 0.5;
-  line-height: 2.5em;
+  line-height: 2em;
   &:hover {
     text-decoration: none;
     cursor: text;
   }
   text-decoration: none;
+  font-weight: 400;
 `;
 
 const StyledDiv = styled.div`

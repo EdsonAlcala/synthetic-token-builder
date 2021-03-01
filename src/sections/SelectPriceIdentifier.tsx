@@ -110,7 +110,7 @@ export const SelectPriceIdentifier = () => {
 
           <div style={{ marginTop: "1em" }}>
             <StyledButton
-              disabled={selectedPriceIdentifier === ""}
+              disabled={selectedPriceIdentifier === DEFAULT_SELECT_VALUE}
               variant="danger"
               onClick={handleOnNextClick}
             >

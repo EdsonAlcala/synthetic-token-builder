@@ -1,13 +1,9 @@
-import { Box, makeStyles, styled, Typography } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import React, { useState } from "react";
-import { Form, Button as BootstrapButton, Row, Col } from "react-bootstrap";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import { Form, Row, Col } from "react-bootstrap";
 
 import { useGlobalState, useStep } from "../hooks";
-import { TokenData } from "../types";
+import { TokenDataResponse } from "../types";
 import { useQuery } from "@apollo/client";
 import { COLLATERALS } from "../apollo/uma/queries";
 import Connection from "../hooks/Connection";
@@ -16,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import { DEFAULT_SELECT_VALUE } from "../constants";
 
 export interface CollateralResponse {
-  tokens: TokenData[];
+  tokens: TokenDataResponse[];
 }
 
 export const SelectCollateralToken = () => {
@@ -30,7 +26,7 @@ export const SelectCollateralToken = () => {
   } = useGlobalState();
   // const classes = useStyles();
 
-  const [collateralTokens, setCollateralTokens] = useState<TokenData[]>([]);
+  const [collateralTokens, setCollateralTokens] = useState<TokenDataResponse[]>([]);
 
   const handleSelectChange = (e: any) => {
     if (e.target.value === DEFAULT_SELECT_VALUE) {

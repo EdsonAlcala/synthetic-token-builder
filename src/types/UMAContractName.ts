@@ -1,7 +1,3 @@
-export type Bytes20 = string;
-
-export type EthereumAddress = Bytes20;
-
 export type UMAContractName =
   | "Finder"
   | "VotingToken"
@@ -23,7 +19,3 @@ export type UMAContractName =
   | "PerpetualLib"
   | "PerpetualCreator"
   | "ERC20";
-
-export type Percentage = number
-
-export type Timestamp = number

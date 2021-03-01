@@ -4,6 +4,8 @@ export const SELECT_PRICE_IDENTIFIER = "select_price_identifier";
 
 export const CREATE_EXPIRING_MULTIPARTY = "create_expiring_multiparty";
 
+export const MINT = "mint"
+
 export const BLUE_COLOR = "#222336";
 
 export const SUPPORTED_NETWORK_IDS: number[] = [1, 42];

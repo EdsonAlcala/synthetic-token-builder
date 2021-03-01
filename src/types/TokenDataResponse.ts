@@ -1,4 +1,4 @@
-export interface TokenData {
+export interface TokenDataResponse {
   name: string;
   symbol: string;
   decimals: number;

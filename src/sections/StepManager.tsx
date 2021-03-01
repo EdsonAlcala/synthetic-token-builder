@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import {
   CREATE_EXPIRING_MULTIPARTY,
+  MINT,
   SELECT_COLLATERAL_TOKEN,
   SELECT_PRICE_IDENTIFIER,
 } from "../constants";
@@ -10,6 +11,7 @@ import {
 import { SelectPriceIdentifier } from "./SelectPriceIdentifier";
 import { SelectCollateralToken } from "./SelectCollateralToken";
 import { CreateExpiringMultiParty } from "./CreateExpiringMultiParty";
+import { Mint } from './Mint'
 import { Box } from "@material-ui/core";
 
 export const StepManager: React.FC = () => {
@@ -33,6 +35,10 @@ export const StepManager: React.FC = () => {
 
         <Route path={`${match.path}/${SELECT_COLLATERAL_TOKEN}`}>
           <SelectCollateralToken />
+        </Route>
+
+        <Route path={`${match.path}/${MINT}`}>
+          <Mint />
         </Route>
       </Switch>
     </Box>
