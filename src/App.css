@@ -1,5 +1,6 @@
 html, body, #root  {
   height: 100%;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 body {
@@ -9,4 +10,13 @@ body {
 .red {
   color: red;
   font-size: 0.8em;
+}
+
+.card {
+  border-radius: 0;
+}
+.card-header {
+  background: none;
+  font-weight: 400;
+  font-size: 0.9em;
 }
