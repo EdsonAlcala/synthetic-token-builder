@@ -26,7 +26,9 @@ export const SelectCollateralToken = () => {
   } = useGlobalState();
   // const classes = useStyles();
 
-  const [collateralTokens, setCollateralTokens] = useState<TokenDataResponse[]>([]);
+  const [collateralTokens, setCollateralTokens] = useState<TokenDataResponse[]>(
+    []
+  );
 
   const handleSelectChange = (e: any) => {
     if (e.target.value === DEFAULT_SELECT_VALUE) {

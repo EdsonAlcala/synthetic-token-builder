@@ -11,7 +11,7 @@ import {
 import { SelectPriceIdentifier } from "./SelectPriceIdentifier";
 import { SelectCollateralToken } from "./SelectCollateralToken";
 import { CreateExpiringMultiParty } from "./CreateExpiringMultiParty";
-import { Mint } from './Mint'
+import { Mint } from "./Mint";
 import { Box } from "@material-ui/core";
 
 export const StepManager: React.FC = () => {

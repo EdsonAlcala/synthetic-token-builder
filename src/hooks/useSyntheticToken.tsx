@@ -1,59 +1,80 @@
-import { BigNumber, ethers } from "ethers"
-import { useEffect, useState } from "react"
-import { EMPData, EthereumAddress, TokenData } from "../types"
-import { fromWei } from "../utils"
-import Connection from "./Connection"
-import { useERC20At } from "./useERC20At"
+import { BigNumber, ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { EMPData, EthereumAddress, TokenData } from "../types";
+import { fromWei } from "../utils";
+import Connection from "./Connection";
+import { useERC20At } from "./useERC20At";
 
 export const useSyntheticToken = (
   empAddress: EthereumAddress,
   empState?: EMPData
 ): TokenData | undefined => {
   // external
-  const { block$, address } = Connection.useContainer()
-  const tokenAddress = empState ? empState.tokenCurrency : undefined
-  const { instance } = useERC20At(tokenAddress)
+  const { block$, address } = Connection.useContainer();
+  const tokenAddress = empState ? empState.tokenCurrency : undefined;
+  const { instance } = useERC20At(tokenAddress);
 
   // state
-  const [syntheticState, setSyntheticState] = useState<TokenData | undefined>(undefined)
-  const getBalance = async (contractInstance: ethers.Contract, addressParam: EthereumAddress, newDecimals: number) => {
-    const balanceRaw: BigNumber = await contractInstance.balanceOf(addressParam)
-    const newBalance = fromWei(balanceRaw, newDecimals)
-    return newBalance
-  }
+  const [syntheticState, setSyntheticState] = useState<TokenData | undefined>(
+    undefined
+  );
+  const getBalance = async (
+    contractInstance: ethers.Contract,
+    addressParam: EthereumAddress,
+    newDecimals: number
+  ) => {
+    const balanceRaw: BigNumber = await contractInstance.balanceOf(
+      addressParam
+    );
+    const newBalance = fromWei(balanceRaw, newDecimals);
+    return newBalance;
+  };
 
   const setMaxAllowance = async () => {
     if (instance) {
-      const receipt = await instance.approve(empAddress, ethers.constants.MaxUint256)
-      await receipt.wait()
-      return receipt
+      const receipt = await instance.approve(
+        empAddress,
+        ethers.constants.MaxUint256
+      );
+      await receipt.wait();
+      return receipt;
     }
-  }
+  };
 
   const getAllowance = async (
     contractInstance: ethers.Contract,
     addressParam: EthereumAddress,
     newDecimals: number
   ) => {
-    const allowanceRaw: BigNumber = await contractInstance.allowance(addressParam, empAddress)
-    const newAllowance = allowanceRaw.eq(ethers.constants.MaxUint256) ? "Infinity" : fromWei(allowanceRaw, newDecimals)
+    const allowanceRaw: BigNumber = await contractInstance.allowance(
+      addressParam,
+      empAddress
+    );
+    const newAllowance = allowanceRaw.eq(ethers.constants.MaxUint256)
+      ? "Infinity"
+      : fromWei(allowanceRaw, newDecimals);
 
-    return newAllowance
-  }
+    return newAllowance;
+  };
 
   const getCollateralInfo = async (contractInstance: ethers.Contract) => {
     if (address !== null) {
-      const [newSymbol, newName, newDecimals, newTotalSupply] = await Promise.all([
+      const [
+        newSymbol,
+        newName,
+        newDecimals,
+        newTotalSupply,
+      ] = await Promise.all([
         contractInstance.symbol(),
         contractInstance.name(),
         contractInstance.decimals(),
         contractInstance.totalSupply(),
-      ])
+      ]);
 
       const [newBalance, newAllowance] = await Promise.all([
         getBalance(contractInstance, address, newDecimals),
         getAllowance(contractInstance, address, newDecimals),
-      ])
+      ]);
 
       setSyntheticState({
         symbol: newSymbol,
@@ -64,26 +85,30 @@ export const useSyntheticToken = (
         balance: newBalance,
         setMaxAllowance,
         instance: contractInstance,
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     if (instance && address !== null) {
-      setSyntheticState(undefined)
-      getCollateralInfo(instance).catch((error) => console.log("error getting token info", error))
+      setSyntheticState(undefined);
+      getCollateralInfo(instance).catch((error) =>
+        console.log("error getting token info", error)
+      );
     }
-  }, [instance, address]) // eslint-disable-line
+  }, [instance, address]); // eslint-disable-line
 
   // get collateral info on each new block
   useEffect(() => {
     if (block$ && instance) {
       const sub = block$.subscribe(() =>
-        getCollateralInfo(instance).catch((error) => console.log("Error getCollateralInfo", error))
-      )
-      return () => sub.unsubscribe()
+        getCollateralInfo(instance).catch((error) =>
+          console.log("Error getCollateralInfo", error)
+        )
+      );
+      return () => sub.unsubscribe();
     }
-  }, [block$, instance]) // eslint-disable-line
+  }, [block$, instance]); // eslint-disable-line
 
-  return syntheticState
-}
+  return syntheticState;
+};

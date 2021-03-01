@@ -9,8 +9,8 @@ interface IGlobalStateProvider {
   selectedCollateralToken?: TokenDataResponse;
   setSelectedPriceIdentifier: (priceIdentifier: string) => void;
   selectedPriceIdentifier: string;
-  empAddress?: string
-  setEmpAddress: (newAddress: string) => void
+  empAddress?: string;
+  setEmpAddress: (newAddress: string) => void;
 }
 
 const defaultCollateral: TokenDataResponse = {
@@ -18,17 +18,17 @@ const defaultCollateral: TokenDataResponse = {
   symbol: "WETH",
   decimals: 18,
   address: "0x0",
-  isOnWhitelist: true
+  isOnWhitelist: true,
 };
 
 /* tslint:disable */
 const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultCollateral,
-  setSelectedCollateralToken: () => { },
-  setSelectedPriceIdentifier: () => { },
+  setSelectedCollateralToken: () => {},
+  setSelectedPriceIdentifier: () => {},
   empAddress: "",
-  setEmpAddress: () => { }
+  setEmpAddress: () => {},
 });
 /* tslint:enable */
 
@@ -43,7 +43,7 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
     TokenDataResponse | undefined
   >(undefined);
 
-  const [empAddress, setEmpAddress] = useState<string | undefined>(undefined)
+  const [empAddress, setEmpAddress] = useState<string | undefined>(undefined);
   return (
     <GlobalStateContext.Provider
       value={{
@@ -52,7 +52,7 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
         selectedCollateralToken,
         setSelectedCollateralToken,
         empAddress,
-        setEmpAddress
+        setEmpAddress,
       }}
     >
       {children}

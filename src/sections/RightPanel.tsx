@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import styled from "styled-components";
 
-import ERC20Artifact from "@uma/core/build/contracts/ERC20.json"
+import ERC20Artifact from "@uma/core/build/contracts/ERC20.json";
 
 import { useGlobalState } from "../hooks/useGlobalState";
 import Connection from "../hooks/Connection";
@@ -39,7 +39,7 @@ export const RightPanel: React.FC = () => {
   return (
     <React.Fragment>
       {selectedCollateralToken && (
-        <Card >
+        <Card>
           <Card.Header>Selected collateral token</Card.Header>
           <React.Fragment>
             <AccordionContentBody className="borderBottomExceptLast">
@@ -69,7 +69,10 @@ export const RightPanel: React.FC = () => {
         <Card style={{ borderTop: "none" }}>
           <Card.Header>Selected price identifier</Card.Header>
           <React.Fragment>
-            <AccordionContentBody className="borderBottomExceptLast" direction="horizontal">
+            <AccordionContentBody
+              className="borderBottomExceptLast"
+              direction="horizontal"
+            >
               <Description style={{ justifyContent: "center" }}>
                 <span>{selectedPriceIdentifier}</span>
               </Description>

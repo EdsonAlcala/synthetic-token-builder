@@ -11,13 +11,13 @@ export const PRICE_IDENTIFIERS = gql`
 
 export const COLLATERALS = gql`
   query collaterals {
-      tokens(where: {indexingAsCollateral: true}) {
-        name
-        symbol
-        decimals
-        address
-        isOnWhitelist
-      }
+    tokens(where: { indexingAsCollateral: true }) {
+      name
+      symbol
+      decimals
+      address
+      isOnWhitelist
+    }
   }
 `;
 

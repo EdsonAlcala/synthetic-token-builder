@@ -21,5 +21,5 @@ const umaLinks = ApolloLink.split(
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: umaLinks
+  link: umaLinks,
 });

@@ -13,7 +13,7 @@ import {
 } from "../components";
 import { useGlobalState, useStep, useUMARegistry } from "../hooks";
 import Connection from "../hooks/Connection";
-import { ArrowUpRight } from 'react-bootstrap-icons';
+import { ArrowUpRight } from "react-bootstrap-icons";
 
 import "react-datetime/css/react-datetime.css";
 import { deployEMP, EMPParameters } from "../utils";
@@ -46,7 +46,14 @@ export const CreateExpiringMultiParty = () => {
   const { provider, signer, network } = Connection.useContainer();
   const { getEtherscanUrl } = Etherscan.useContainer();
 
-  const { setSelectedCollateralToken, setSelectedPriceIdentifier, selectedPriceIdentifier, selectedCollateralToken, setEmpAddress, empAddress } = useGlobalState();
+  const {
+    setSelectedCollateralToken,
+    setSelectedPriceIdentifier,
+    selectedPriceIdentifier,
+    selectedCollateralToken,
+    setEmpAddress,
+    empAddress,
+  } = useGlobalState();
   const { getContractAddress, getContractInterface } = useUMARegistry();
   const { setCurrentStepCompleted, getStepBefore, goStepBefore } = useStep();
   const [error, setError] = useState<string | undefined>(undefined);
@@ -69,10 +76,10 @@ export const CreateExpiringMultiParty = () => {
 
     const deployEMPTx = async () => {
       if (signer !== null && network !== null) {
-        const dateTimestamp = values.expirationTimestamp
-        const storeAddress = getContractAddress('Store')
+        const dateTimestamp = values.expirationTimestamp;
+        const storeAddress = getContractAddress("Store");
         if (!storeAddress) {
-          throw new Error("Invalid Store address")
+          throw new Error("Invalid Store address");
         }
         const params: EMPParameters = {
           expirationTimestamp: parseInt(dateTimestamp, 10),
@@ -85,37 +92,39 @@ export const CreateExpiringMultiParty = () => {
           liquidationLiveness: parseInt(values.liquidationLiveness, 10),
           withdrawalLiveness: parseInt(values.withdrawalLiveness, 10),
           excessTokenBeneficiary: storeAddress, // UMA Store contract.
-        }
+        };
 
-        const result = await deployEMP(params, network, signer)
+        const result = await deployEMP(params, network, signer);
         if (result) {
-          const { receipt, expiringMultiPartyAddress } = result
-          console.log("Receipt", receipt)
-          console.log("ExpiringMultiPartyAddress", expiringMultiPartyAddress)
-          setEmpAddress(expiringMultiPartyAddress)
-          setHash(receipt.transactionHash)
+          const { receipt, expiringMultiPartyAddress } = result;
+          console.log("Receipt", receipt);
+          console.log("ExpiringMultiPartyAddress", expiringMultiPartyAddress);
+          setEmpAddress(expiringMultiPartyAddress);
+          setHash(receipt.transactionHash);
         }
       }
-    }
+    };
 
     deployEMPTx()
       .then(() => {
-        setEMPHasBeenCreated(true)
-        setSubmitting(false)
-        setSelectedCollateralToken(undefined)
-        setSelectedPriceIdentifier(DEFAULT_SELECT_VALUE)
+        setEMPHasBeenCreated(true);
+        setSubmitting(false);
+        setSelectedCollateralToken(undefined);
+        setSelectedPriceIdentifier(DEFAULT_SELECT_VALUE);
       })
       .catch((error) => {
-        setError("Something unexpected happened. Please refresh and try again")
-        setSubmitting(false)
-      })
+        setError("Something unexpected happened. Please refresh and try again");
+        setSubmitting(false);
+      });
   };
 
   return (
     <Box>
       {/* {empHasBeenCreated === false && */}
       <React.Fragment>
-        <StyledTitle variant="subtitle1">Create Expiring MultiParty</StyledTitle>
+        <StyledTitle variant="subtitle1">
+          Create Expiring MultiParty
+        </StyledTitle>
 
         <Formik
           initialValues={initialValues}
@@ -257,7 +266,7 @@ export const CreateExpiringMultiParty = () => {
                     onClick={handleOnBackClick}
                   >
                     Back
-                </StyledButton>
+                  </StyledButton>
                 </div>
               )}
             </Form>
@@ -272,15 +281,21 @@ export const CreateExpiringMultiParty = () => {
         {empAddress}
         <br />
         <br />
-        {hash && <React.Fragment>
-          <p>View on Etherscan{" "} <a target="_blank" href={getEtherscanUrl(hash)}><ArrowUpRight color="black" /></a></p>
-        </React.Fragment>}
+        {hash && (
+          <React.Fragment>
+            <p>
+              View on Etherscan{" "}
+              <a target="_blank" href={getEtherscanUrl(hash)}>
+                <ArrowUpRight color="black" />
+              </a>
+            </p>
+          </React.Fragment>
+        )}
       </SuccessMessage>
 
       {/* <ErrorMessage show={true !== undefined}>Couldn't load data, please refresh</ErrorMessage> */}
 
       {/* <MaterialAlert severity="success">This is a success alert — check it out!</MaterialAlert> */}
-
     </Box>
   );
 };

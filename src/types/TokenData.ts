@@ -1,13 +1,13 @@
-import { BigNumber, ContractReceipt, ethers } from "ethers"
-import { EthereumAddress, NumberAsString } from "./Common"
+import { BigNumber, ContractReceipt, ethers } from "ethers";
+import { EthereumAddress, NumberAsString } from "./Common";
 
 export interface TokenData {
-    symbol: string
-    name: string
-    decimals: number
-    balance: NumberAsString
-    allowance: NumberAsString | "Infinity"
-    totalSupply: BigNumber
-    setMaxAllowance: () => Promise<ContractReceipt>
-    instance: ethers.Contract
+  symbol: string;
+  name: string;
+  decimals: number;
+  balance: NumberAsString;
+  allowance: NumberAsString | "Infinity";
+  totalSupply: BigNumber;
+  setMaxAllowance: () => Promise<ContractReceipt>;
+  instance: ethers.Contract;
 }

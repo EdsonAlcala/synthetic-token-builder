@@ -1,17 +1,22 @@
-import React, { PropsWithChildren, useContext, useEffect, useState } from "react"
-import { BigNumber, Bytes, ethers } from "ethers"
+import React, {
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { BigNumber, Bytes, ethers } from "ethers";
 
-import { EMPData, EthereumAddress, TokenData } from "../types"
+import { EMPData, EthereumAddress, TokenData } from "../types";
 
-import { useCollateralToken } from "./useCollateralToken"
-import { useSyntheticToken } from "./useSyntheticToken"
-import Connection from "./Connection"
+import { useCollateralToken } from "./useCollateralToken";
+import { useSyntheticToken } from "./useSyntheticToken";
+import Connection from "./Connection";
 
 interface IEMPProvider {
-  empState: EMPData | undefined
-  collateralState: TokenData | undefined
-  syntheticState: TokenData | undefined
-  instance: ethers.Contract
+  empState: EMPData | undefined;
+  collateralState: TokenData | undefined;
+  syntheticState: TokenData | undefined;
+  instance: ethers.Contract;
 }
 
 const EMPContext = React.createContext<IEMPProvider>({
@@ -19,14 +24,14 @@ const EMPContext = React.createContext<IEMPProvider>({
   collateralState: undefined,
   syntheticState: undefined,
   instance: {} as ethers.Contract,
-})
+});
 
 interface EMPProviderProps {
-  empInstance: ethers.Contract
+  empInstance: ethers.Contract;
 }
 
 export const getAllEMPData = async (empInstance: ethers.Contract) => {
-  console.log("Calling EMPProvider#getAllEMPData")
+  console.log("Calling EMPProvider#getAllEMPData");
   const res = await Promise.all([
     empInstance.expirationTimestamp(),
     empInstance.collateralCurrency(),
@@ -47,7 +52,7 @@ export const getAllEMPData = async (empInstance: ethers.Contract) => {
     // empInstance.disputeBondPercentage(),
     // empInstance.disputerDisputeRewardPercentage(),
     // empInstance.sponsorDisputeRewardPercentage(),
-  ])
+  ]);
 
   const newState: Partial<EMPData> = {
     expirationTimestamp: res[0] as BigNumber,
@@ -70,30 +75,40 @@ export const getAllEMPData = async (empInstance: ethers.Contract) => {
     // disputeBondPct: res[17] as BigNumber,
     // disputerDisputeRewardPct: res[18] as BigNumber,
     // sponsorDisputeRewardPct: res[19] as BigNumber,
-  }
+  };
 
-  return newState
-}
+  return newState;
+};
 
-export const EMPProvider: React.FC<PropsWithChildren<EMPProviderProps>> = ({ children, empInstance }) => {
-  const [empState, setEMPState] = useState<EMPData | undefined>(undefined)
-  const [collateralState, setCollateralState] = useState<TokenData | undefined>(undefined)
-  const [syntheticState, setSyntheticState] = useState<TokenData | undefined>(undefined)
-  const [instance, setInstance] = useState(empInstance)
+export const EMPProvider: React.FC<PropsWithChildren<EMPProviderProps>> = ({
+  children,
+  empInstance,
+}) => {
+  const [empState, setEMPState] = useState<EMPData | undefined>(undefined);
+  const [collateralState, setCollateralState] = useState<TokenData | undefined>(
+    undefined
+  );
+  const [syntheticState, setSyntheticState] = useState<TokenData | undefined>(
+    undefined
+  );
+  const [instance, setInstance] = useState(empInstance);
 
-  const { block$ } = Connection.useContainer()
+  const { block$ } = Connection.useContainer();
 
-  const collateralStateResult = useCollateralToken(empInstance.address, empState)
-  const syntheticStateResult = useSyntheticToken(empInstance.address, empState)
+  const collateralStateResult = useCollateralToken(
+    empInstance.address,
+    empState
+  );
+  const syntheticStateResult = useSyntheticToken(empInstance.address, empState);
 
   useEffect(() => {
     getAllEMPData(empInstance)
       .then((newState) => setEMPState(newState as any))
       .catch((error) => {
         // TODO: Remove this any
-        console.log("Error on getAllEMPData", error)
-      })
-  }, [empInstance]) // eslint-disable-line
+        console.log("Error on getAllEMPData", error);
+      });
+  }, [empInstance]); // eslint-disable-line
 
   // get state on each block
   useEffect(() => {
@@ -102,28 +117,28 @@ export const EMPProvider: React.FC<PropsWithChildren<EMPProviderProps>> = ({ chi
         getAllEMPData(empInstance)
           .then((newState) => setEMPState(newState as any))
           .catch((error) => console.log("error getAllEMPData", error))
-      )
-      return () => sub.unsubscribe()
+      );
+      return () => sub.unsubscribe();
     }
-  }, [block$, empInstance]) // eslint-disable-line
+  }, [block$, empInstance]); // eslint-disable-line
 
   useEffect(() => {
     if (collateralStateResult) {
-      console.log("updating collateral state")
-      setCollateralState(collateralStateResult)
+      console.log("updating collateral state");
+      setCollateralState(collateralStateResult);
     }
-  }, [collateralStateResult])
+  }, [collateralStateResult]);
 
   useEffect(() => {
     if (syntheticStateResult) {
-      console.log("updating synthetic state")
-      setSyntheticState(syntheticStateResult)
+      console.log("updating synthetic state");
+      setSyntheticState(syntheticStateResult);
     }
-  }, [syntheticStateResult])
+  }, [syntheticStateResult]);
 
   useEffect(() => {
-    setInstance(empInstance)
-  }, [empInstance])
+    setInstance(empInstance);
+  }, [empInstance]);
 
   return (
     <EMPContext.Provider
@@ -136,14 +151,16 @@ export const EMPProvider: React.FC<PropsWithChildren<EMPProviderProps>> = ({ chi
     >
       {children}
     </EMPContext.Provider>
-  )
-}
+  );
+};
 
 export const useEMPProvider = (): IEMPProvider => {
-  const context = useContext(EMPContext)
+  const context = useContext(EMPContext);
 
   if (context === null) {
-    throw new Error("useEMPProvider() can only be used inside of <EMPProvider />, please declare it at a higher level")
+    throw new Error(
+      "useEMPProvider() can only be used inside of <EMPProvider />, please declare it at a higher level"
+    );
   }
-  return context
-}
+  return context;
+};
