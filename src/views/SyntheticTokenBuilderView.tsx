@@ -11,7 +11,7 @@ export const SyntheticTokenBuilderView: React.FC = () => {
 
   return (
     <Container>
-      <Box marginTop="6em">
+      <Box>
         <Box
           border="1px solid #fa4a4a"
           minHeight="70vh"
@@ -21,15 +21,15 @@ export const SyntheticTokenBuilderView: React.FC = () => {
           {connected ? (
             <TokenBuilderSection />
           ) : (
-            <Box
-              display="flex"
-              height="70vh"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography>Connect to a network</Typography>
-            </Box>
-          )}
+              <Box
+                display="flex"
+                height="70vh"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Typography>Connect to a network</Typography>
+              </Box>
+            )}
         </Box>
       </Box>
     </Container>
