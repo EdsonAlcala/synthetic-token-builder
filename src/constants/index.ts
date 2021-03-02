@@ -22,4 +22,4 @@ export const DAI = "DAI";
 
 export const OneInchUSDPriceIdentifier = "1INCHUSD";
 
-export const SUCCESS_ROUTE = "congratulations"
+export const SUCCESS_ROUTE = "congratulations";

@@ -51,7 +51,7 @@ export const CreateExpiringMultiParty = () => {
     selectedPriceIdentifier,
     selectedCollateralToken,
     setEmpAddress,
-    setTransactionHash
+    setTransactionHash,
   } = useGlobalState();
   const { getContractAddress } = useUMARegistry();
   const { getStepBefore, goStepBefore } = useStep();
@@ -109,7 +109,7 @@ export const CreateExpiringMultiParty = () => {
         setSubmitting(false);
         setSelectedCollateralToken(undefined);
         setSelectedPriceIdentifier(DEFAULT_SELECT_VALUE);
-        history.push(`/${SUCCESS_ROUTE}`)
+        history.push(`/${SUCCESS_ROUTE}`);
       })
       .catch((err) => {
         setError("Something unexpected happened. Please refresh and try again");

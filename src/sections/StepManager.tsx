@@ -36,7 +36,6 @@ export const StepManager: React.FC = () => {
         <Route path={`${match.path}/${SELECT_COLLATERAL_TOKEN}`}>
           <SelectCollateralToken />
         </Route>
-
       </Switch>
     </Box>
   );

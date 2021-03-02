@@ -19,9 +19,7 @@ export const DefaultLayout: React.FC = ({ children }) => {
             <Header />
           </Grid>
           <Grid item={true}>
-            <Box marginTop="4em">
-              {children}
-            </Box>
+            <Box marginTop="4em">{children}</Box>
           </Grid>
         </MainContainer>
       </Container>

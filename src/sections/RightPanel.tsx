@@ -72,21 +72,17 @@ export const RightPanel: React.FC = () => {
 };
 
 interface RowItemProps {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
-
 
 const RowItem: React.FC<RowItemProps> = ({ label, value }) => {
   return (
     <p style={{ fontWeight: "bold" }}>
-      {label}:{" "}
-      <span style={{ fontWeight: "lighter" }}>
-        {value}
-      </span>
+      {label}: <span style={{ fontWeight: "lighter" }}>{value}</span>
     </p>
-  )
-}
+  );
+};
 const AccordionContentBody = styled.div<{ direction?: string }>`
   display: flex;
   padding: 0.5em 1em;

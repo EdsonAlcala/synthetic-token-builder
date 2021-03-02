@@ -6,7 +6,12 @@ import {
   RouteProps,
 } from "react-router-dom";
 
-import { ErrorView, HomeView, SyntheticTokenBuilderView, EMPCreatedView } from "./views";
+import {
+  ErrorView,
+  HomeView,
+  SyntheticTokenBuilderView,
+  EMPCreatedView,
+} from "./views";
 import { DefaultLayout } from "./layouts";
 import { SUCCESS_ROUTE, TOKEN_BUILDER_ROUTE } from "./constants";
 import { ThemeProvider } from "styled-components";
@@ -14,7 +19,7 @@ import { ThemeProvider as MaterialUIProvider } from "@material-ui/core/styles";
 import { GlobalStateProvider } from "./hooks";
 
 import { materialUITheme, theme } from "./theme";
-import { } from "./views/EMPCreatedView";
+import {} from "./views/EMPCreatedView";
 
 interface Props extends RouteProps {
   component: any; // TODO: new (props: any) => React.Component
@@ -42,11 +47,7 @@ const RouteWithDefaultLayout = ({ component: Component, ...rest }: Props) => {
 export const Routes = () => (
   <Router>
     <Switch>
-      <RouteWithDefaultLayout
-        exact={true}
-        path="/"
-        component={HomeView}
-      />
+      <RouteWithDefaultLayout exact={true} path="/" component={HomeView} />
       <RouteWithDefaultLayout
         path={`/${TOKEN_BUILDER_ROUTE}`}
         component={SyntheticTokenBuilderView}
