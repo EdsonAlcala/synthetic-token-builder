@@ -12,15 +12,16 @@ export interface EMPParameters {
   syntheticName: string;
   syntheticSymbol: string;
   collateralRequirement: Percentage;
+
+  // optional
+  disputeBondPercentage?: Percentage;
+  sponsorDisputeRewardPercentage?: Percentage;
+  disputerDisputeRewardPercentage?: Percentage;
   minSponsorTokens: number;
 
   liquidationLiveness: number;
   withdrawalLiveness: number;
-  excessTokenBeneficiary: EthereumAddress;
-
-  disputeBondPct?: Percentage;
-  sponsorDisputeRewardPct?: Percentage;
-  disputerDisputeRewardPct?: Percentage;
+  financialProductLibraryAddress?: EthereumAddress
 }
 
 export const deployEMP = async (
@@ -38,10 +39,10 @@ export const deployEMP = async (
   } = values;
 
   const {
-    disputeBondPct,
-    sponsorDisputeRewardPct,
-    disputerDisputeRewardPct,
-    excessTokenBeneficiary,
+    disputeBondPercentage,
+    sponsorDisputeRewardPercentage,
+    disputerDisputeRewardPercentage,
+    financialProductLibraryAddress = "0x0000000000000000000000000000000000000000" // 0x0 because, by default, we don't want to use a custom library.
   } = values;
 
   const params = {
@@ -53,17 +54,17 @@ export const deployEMP = async (
     collateralRequirement: {
       rawValue: toWei(`${collateralRequirement / 100}`),
     },
-    disputeBondPct: {
-      rawValue: toWei(disputeBondPct ? `${disputeBondPct / 100}` : "0.1"), // 0.1 -> 10 % dispute bond.
+    disputeBondPercentage: {
+      rawValue: toWei(disputeBondPercentage ? `${disputeBondPercentage / 100}` : "0.1"), // 0.1 -> 10 % dispute bond.
     },
-    sponsorDisputeRewardPct: {
+    sponsorDisputeRewardPercentage: {
       rawValue: toWei(
-        sponsorDisputeRewardPct ? `${sponsorDisputeRewardPct / 100}` : "0.05"
+        sponsorDisputeRewardPercentage ? `${sponsorDisputeRewardPercentage / 100}` : "0.05"
       ), // 0.05 -> 5% reward for sponsors who are disputed invalidly.
     },
-    disputerDisputeRewardPct: {
+    disputerDisputeRewardPercentage: {
       rawValue: toWei(
-        disputerDisputeRewardPct ? `${disputerDisputeRewardPct / 100}` : "0.2"
+        disputerDisputeRewardPercentage ? `${disputerDisputeRewardPercentage / 100}` : "0.2"
       ), // 0.2 -> 20% reward for correct disputes.
     },
     minSponsorTokens: {
@@ -71,7 +72,7 @@ export const deployEMP = async (
     },
     liquidationLiveness: BigNumber.from(values.liquidationLiveness),
     withdrawalLiveness: BigNumber.from(values.withdrawalLiveness),
-    excessTokenBeneficiary, // i,e UMA Store contract.
+    financialProductLibraryAddress
   };
 
   const umaABIs = getUMAAbis();
