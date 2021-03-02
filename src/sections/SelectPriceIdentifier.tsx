@@ -41,7 +41,7 @@ export const SelectPriceIdentifier = () => {
 
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
   // TODO
-  // eslint-disable-next-line 
+  // eslint-disable-next-line
   const { loading, error } = useQuery(PRICE_IDENTIFIERS, {
     context: { clientName: subgraphToQuery },
     skip: !network,

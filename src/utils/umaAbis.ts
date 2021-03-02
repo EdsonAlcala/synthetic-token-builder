@@ -11,7 +11,10 @@ export const getUMAAbis = () => {
   interfaces.set("WETH9", WETH9Artifact.abi as any);
   interfaces.set("ERC20", ERC20Artifact.abi as any);
   interfaces.set("ExpiringMultiParty", ExpiringMultiPartyArtifact.abi as any);
-  interfaces.set("ExpiringMultiPartyCreator", ExpiringMultiPartyCreatorArtifact.abi as any);
+  interfaces.set(
+    "ExpiringMultiPartyCreator",
+    ExpiringMultiPartyCreatorArtifact.abi as any
+  );
 
   return interfaces;
 };

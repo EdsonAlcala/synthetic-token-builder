@@ -40,7 +40,11 @@ export const EMPCreatedView: React.FC = () => {
         <Box>
           <Typography>
             You can also view on Etherscan{" "}
-            <a target="_blank" rel="noreferrer" href={getEtherscanUrl(transactionHash)}>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={getEtherscanUrl(transactionHash)}
+            >
               <ArrowUpRight color="black" />
             </a>
           </Typography>

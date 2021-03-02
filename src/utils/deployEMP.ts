@@ -21,7 +21,7 @@ export interface EMPParameters {
 
   liquidationLiveness: number;
   withdrawalLiveness: number;
-  financialProductLibraryAddress?: EthereumAddress
+  financialProductLibraryAddress?: EthereumAddress;
 }
 
 export const deployEMP = async (
@@ -42,7 +42,7 @@ export const deployEMP = async (
     disputeBondPercentage,
     sponsorDisputeRewardPercentage,
     disputerDisputeRewardPercentage,
-    financialProductLibraryAddress = "0x0000000000000000000000000000000000000000" // 0x0 because, by default, we don't want to use a custom library.
+    financialProductLibraryAddress = "0x0000000000000000000000000000000000000000", // 0x0 because, by default, we don't want to use a custom library.
   } = values;
 
   const params = {
@@ -55,16 +55,22 @@ export const deployEMP = async (
       rawValue: toWei(`${collateralRequirement / 100}`),
     },
     disputeBondPercentage: {
-      rawValue: toWei(disputeBondPercentage ? `${disputeBondPercentage / 100}` : "0.1"), // 0.1 -> 10 % dispute bond.
+      rawValue: toWei(
+        disputeBondPercentage ? `${disputeBondPercentage / 100}` : "0.1"
+      ), // 0.1 -> 10 % dispute bond.
     },
     sponsorDisputeRewardPercentage: {
       rawValue: toWei(
-        sponsorDisputeRewardPercentage ? `${sponsorDisputeRewardPercentage / 100}` : "0.05"
+        sponsorDisputeRewardPercentage
+          ? `${sponsorDisputeRewardPercentage / 100}`
+          : "0.05"
       ), // 0.05 -> 5% reward for sponsors who are disputed invalidly.
     },
     disputerDisputeRewardPercentage: {
       rawValue: toWei(
-        disputerDisputeRewardPercentage ? `${disputerDisputeRewardPercentage / 100}` : "0.2"
+        disputerDisputeRewardPercentage
+          ? `${disputerDisputeRewardPercentage / 100}`
+          : "0.2"
       ), // 0.2 -> 20% reward for correct disputes.
     },
     minSponsorTokens: {
@@ -72,7 +78,7 @@ export const deployEMP = async (
     },
     liquidationLiveness: BigNumber.from(values.liquidationLiveness),
     withdrawalLiveness: BigNumber.from(values.withdrawalLiveness),
-    financialProductLibraryAddress
+    financialProductLibraryAddress,
   };
 
   const umaABIs = getUMAAbis();

@@ -42,8 +42,8 @@ export const NavMenu: React.FC = () => {
                 {currentStep.order > currentStepDefinition.order ? (
                   <CompletedIcon />
                 ) : (
-                    <span>{currentStepDefinition.order}</span>
-                  )}
+                  <span>{currentStepDefinition.order}</span>
+                )}
               </NumberContainer>
               {text}
             </Nav.Link>

@@ -10,7 +10,9 @@ export const getUMAAddresses = (networkId: number) => {
   }
   const addresses = new Map<UMAContractName, EthereumAddress>();
   addresses.set("Store", (StoreArtifact as any).networks[networkId].address);
-  addresses.set("ExpiringMultiPartyCreator", (ExpiringMultiPartyCreatorArtifact as any).networks[networkId].address
+  addresses.set(
+    "ExpiringMultiPartyCreator",
+    (ExpiringMultiPartyCreatorArtifact as any).networks[networkId].address
   );
 
   return addresses;
