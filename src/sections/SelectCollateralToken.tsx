@@ -43,6 +43,8 @@ export const SelectCollateralToken = () => {
   };
 
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
+  // TODO
+  // eslint-disable-next-line
   const { loading, error } = useQuery(COLLATERALS, {
     skip: !network,
     context: { clientName: subgraphToQuery },
