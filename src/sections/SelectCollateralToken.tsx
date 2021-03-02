@@ -24,7 +24,6 @@ export const SelectCollateralToken = () => {
     selectedCollateralToken,
     setSelectedCollateralToken,
   } = useGlobalState();
-  // const classes = useStyles();
 
   const [collateralTokens, setCollateralTokens] = useState<TokenDataResponse[]>(
     []
@@ -44,12 +43,11 @@ export const SelectCollateralToken = () => {
   };
 
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
-  const { loading, error, data } = useQuery(COLLATERALS, {
+  const { loading, error } = useQuery(COLLATERALS, {
     skip: !network,
     context: { clientName: subgraphToQuery },
     pollInterval: 10000,
     onCompleted: ({ tokens }: CollateralResponse) => {
-      console.log("DATA COLLATERAL", tokens);
       setCollateralTokens(tokens);
     },
   });
@@ -58,7 +56,6 @@ export const SelectCollateralToken = () => {
     const nextStep = getNextStep();
     if (nextStep) {
       goNextStep();
-      console.log("nextStep.route", nextStep.route);
       history.push(nextStep.route);
     }
   };

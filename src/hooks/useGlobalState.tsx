@@ -1,4 +1,3 @@
-import { BigNumber, ethers } from "ethers";
 import React, { PropsWithChildren, useContext, useState } from "react";
 
 import { DEFAULT_SELECT_VALUE } from "../constants";
@@ -27,12 +26,12 @@ const defaultCollateral: TokenDataResponse = {
 const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultCollateral,
-  setSelectedCollateralToken: () => {},
-  setSelectedPriceIdentifier: () => {},
+  setSelectedCollateralToken: () => { },
+  setSelectedPriceIdentifier: () => { },
   empAddress: "",
-  setEmpAddress: () => {},
+  setEmpAddress: () => { },
   transactionHash: "",
-  setTransactionHash: () => {},
+  setTransactionHash: () => { },
 });
 /* tslint:enable */
 

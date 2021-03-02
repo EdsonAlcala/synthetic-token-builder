@@ -74,8 +74,6 @@ export const deployEMP = async (
     excessTokenBeneficiary, // i,e UMA Store contract.
   };
 
-  console.log("Params", params);
-
   const umaABIs = getUMAAbis();
   const umaAddresses = getUMAAddresses(network.chainId);
 
@@ -93,11 +91,6 @@ export const deployEMP = async (
     throw new Error("Invalid ExpiringMultipartyCreator Address");
   }
 
-  console.log(
-    "expiringMultipartyCreatorAddress",
-    expiringMultipartyCreatorAddress
-  );
-
   const expiringMultipartyCreator = new ethers.Contract(
     expiringMultipartyCreatorAddress,
     expiringMultipartyCreatorInterface,
@@ -107,13 +100,10 @@ export const deployEMP = async (
   const expiringMultiPartyAddress = await expiringMultipartyCreator.callStatic.createExpiringMultiParty(
     params
   );
-  console.log("expiringMultiPartyAddress", expiringMultiPartyAddress);
 
   const txn = await expiringMultipartyCreator.createExpiringMultiParty(params);
 
   const receipt: ContractReceipt = await txn.wait();
-
-  console.log("Receipt", receipt);
 
   return { receipt, expiringMultiPartyAddress };
 };

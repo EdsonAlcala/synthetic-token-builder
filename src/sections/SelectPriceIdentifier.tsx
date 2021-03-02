@@ -40,7 +40,7 @@ export const SelectPriceIdentifier = () => {
   };
 
   const subgraphToQuery = `UMA${network?.chainId.toString()}`;
-  const { loading, error, data } = useQuery(PRICE_IDENTIFIERS, {
+  const { loading, error } = useQuery(PRICE_IDENTIFIERS, {
     context: { clientName: subgraphToQuery },
     skip: !network,
     pollInterval: 10000,
@@ -61,7 +61,6 @@ export const SelectPriceIdentifier = () => {
     const nextStep = getNextStep();
     if (nextStep) {
       goNextStep();
-      console.log("nextStep.route", nextStep.route);
       history.push(nextStep.route);
     }
   };

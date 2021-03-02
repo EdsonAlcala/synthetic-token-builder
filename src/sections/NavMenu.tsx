@@ -12,9 +12,7 @@ export const NavMenu: React.FC = () => {
   const allSteps = getAllSteps();
 
   const handleOnNavClick = (e: any) => {
-    console.log("clicked");
     goNextStep();
-    console.log("Currente step", currentStep);
   };
 
   return (
@@ -44,8 +42,8 @@ export const NavMenu: React.FC = () => {
                 {currentStep.order > currentStepDefinition.order ? (
                   <CompletedIcon />
                 ) : (
-                  <span>{currentStepDefinition.order}</span>
-                )}
+                    <span>{currentStepDefinition.order}</span>
+                  )}
               </NumberContainer>
               {text}
             </Nav.Link>

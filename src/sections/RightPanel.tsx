@@ -34,7 +34,7 @@ export const RightPanel: React.FC = () => {
       };
       getBalance();
     }
-  }, [selectedCollateralToken, provider]);
+  }, [selectedCollateralToken, provider]); // eslint-disable-line
 
   return (
     <React.Fragment>

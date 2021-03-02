@@ -31,7 +31,6 @@ interface EMPProviderProps {
 }
 
 export const getAllEMPData = async (empInstance: ethers.Contract) => {
-  console.log("Calling EMPProvider#getAllEMPData");
   const res = await Promise.all([
     empInstance.expirationTimestamp(),
     empInstance.collateralCurrency(),
@@ -124,14 +123,12 @@ export const EMPProvider: React.FC<PropsWithChildren<EMPProviderProps>> = ({
 
   useEffect(() => {
     if (collateralStateResult) {
-      console.log("updating collateral state");
       setCollateralState(collateralStateResult);
     }
   }, [collateralStateResult]);
 
   useEffect(() => {
     if (syntheticStateResult) {
-      console.log("updating synthetic state");
       setSyntheticState(syntheticStateResult);
     }
   }, [syntheticStateResult]);

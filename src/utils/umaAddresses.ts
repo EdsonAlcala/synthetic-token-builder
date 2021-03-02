@@ -2,8 +2,8 @@ import { SUPPORTED_NETWORK_IDS } from "../constants";
 import { EthereumAddress, UMAContractName } from "../types";
 
 import ExpiringMultiPartyCreatorArtifact from "@uma/core/build/contracts/ExpiringMultiPartyCreator.json";
-import WETH9Artifact from "@uma/core/build/contracts/WETH9.json";
-import ERC20Artifact from "@uma/core/build/contracts/ERC20.json";
+// import WETH9Artifact from "@uma/core/build/contracts/WETH9.json";
+// import ERC20Artifact from "@uma/core/build/contracts/ERC20.json";
 import StoreArtifact from "@uma/core/build/contracts/Store.json";
 
 // artifact.networks[networkId].address;

@@ -12,9 +12,6 @@ export const EMPCreatedView: React.FC = () => {
   const { empAddress, transactionHash } = useGlobalState();
   const { getEtherscanUrl } = Etherscan.useContainer();
 
-  console.log("empAddress", empAddress);
-  console.log("transactionHash", transactionHash);
-
   if (empAddress && transactionHash) {
     return (
       <Box
@@ -43,7 +40,7 @@ export const EMPCreatedView: React.FC = () => {
         <Box>
           <Typography>
             You can also view on Etherscan{" "}
-            <a target="_blank" href={getEtherscanUrl(transactionHash)}>
+            <a target="_blank" rel="noreferrer" href={getEtherscanUrl(transactionHash)}>
               <ArrowUpRight color="black" />
             </a>
           </Typography>
@@ -55,6 +52,7 @@ export const EMPCreatedView: React.FC = () => {
           Want to setup the GCR?{" "}
           <a
             target="_blank"
+            rel="noreferrer"
             href="https://docs.umaproject.org/synthetic-tokens/glossary#global-collateralization-ratio-gcr"
           >
             Learn more

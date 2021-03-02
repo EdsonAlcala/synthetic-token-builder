@@ -15,7 +15,6 @@ import Connection from "../hooks/Connection";
 
 import { deployEMP, EMPParameters } from "../utils";
 import { DEFAULT_SELECT_VALUE, SUCCESS_ROUTE } from "../constants";
-import Etherscan from "../hooks/Etherscan";
 
 import "react-datetime/css/react-datetime.css";
 
@@ -42,8 +41,7 @@ const initialValues: FormProps = {
 };
 
 export const CreateExpiringMultiParty = () => {
-  const { provider, signer, network } = Connection.useContainer();
-  const { getEtherscanUrl } = Etherscan.useContainer();
+  const { signer, network } = Connection.useContainer();
 
   const {
     setSelectedCollateralToken,
@@ -64,7 +62,6 @@ export const CreateExpiringMultiParty = () => {
     const stepBefore = getStepBefore();
     if (stepBefore) {
       goStepBefore();
-      console.log("stepBefore.route", stepBefore.route);
       history.push(stepBefore.route);
     }
   };
@@ -95,8 +92,6 @@ export const CreateExpiringMultiParty = () => {
         const result = await deployEMP(params, network, signer);
         if (result) {
           const { receipt, expiringMultiPartyAddress } = result;
-          console.log("Receipt", receipt);
-          console.log("ExpiringMultiPartyAddress", expiringMultiPartyAddress);
           setEmpAddress(expiringMultiPartyAddress);
           setTransactionHash(receipt.transactionHash);
         }
