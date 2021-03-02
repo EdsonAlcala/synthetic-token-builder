@@ -10,7 +10,7 @@ export const BLUE_COLOR = "#222336";
 
 export const SUPPORTED_NETWORK_IDS: number[] = [1, 42];
 
-export const TOKEN_BUILDER_ROUTE = "/token-builder";
+export const TOKEN_BUILDER_ROUTE = "token-builder";
 
 export const DEFAULT_SELECT_VALUE = "0";
 
@@ -21,3 +21,5 @@ export const MAINNET_NETWORK = "Mainnet";
 export const DAI = "DAI";
 
 export const OneInchUSDPriceIdentifier = "1INCHUSD";
+
+export const SUCCESS_ROUTE = "congratulations"

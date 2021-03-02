@@ -43,24 +43,11 @@ export const RightPanel: React.FC = () => {
           <Card.Header>Selected collateral token</Card.Header>
           <React.Fragment>
             <AccordionContentBody className="borderBottomExceptLast">
-              <p style={{ fontWeight: "bold" }}>
-                Name:{" "}
-                <span style={{ fontWeight: "lighter" }}>
-                  {selectedCollateralToken.name}
-                </span>
-              </p>
-              <p style={{ fontWeight: "bold" }}>
-                Symbol:{" "}
-                <span style={{ fontWeight: "lighter" }}>
-                  {selectedCollateralToken.symbol}
-                </span>
-              </p>
-              <p style={{ fontWeight: "bold" }}>
-                Balance:{" "}
-                <span style={{ fontWeight: "lighter" }}>
-                  {collateralBalance}
-                </span>
-              </p>
+              <RowItem label="Name" value={selectedCollateralToken.name} />
+
+              <RowItem label="Symbol" value={selectedCollateralToken.symbol} />
+
+              <RowItem label="Balance" value={collateralBalance} />
             </AccordionContentBody>
           </React.Fragment>
         </Card>
@@ -74,7 +61,7 @@ export const RightPanel: React.FC = () => {
               direction="horizontal"
             >
               <Description style={{ justifyContent: "center" }}>
-                <span>{selectedPriceIdentifier}</span>
+                <RowItem label="Name" value={selectedPriceIdentifier} />
               </Description>
             </AccordionContentBody>
           </React.Fragment>
@@ -84,6 +71,22 @@ export const RightPanel: React.FC = () => {
   );
 };
 
+interface RowItemProps {
+  label: string
+  value: string
+}
+
+
+const RowItem: React.FC<RowItemProps> = ({ label, value }) => {
+  return (
+    <p style={{ fontWeight: "bold" }}>
+      {label}:{" "}
+      <span style={{ fontWeight: "lighter" }}>
+        {value}
+      </span>
+    </p>
+  )
+}
 const AccordionContentBody = styled.div<{ direction?: string }>`
   display: flex;
   padding: 0.5em 1em;

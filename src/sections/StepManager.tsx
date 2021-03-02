@@ -37,9 +37,6 @@ export const StepManager: React.FC = () => {
           <SelectCollateralToken />
         </Route>
 
-        <Route path={`${match.path}/${MINT}`}>
-          <Mint />
-        </Route>
       </Switch>
     </Box>
   );

@@ -9,16 +9,15 @@ import {
   FormItem,
   StyledButton,
   StyledTitle,
-  SuccessMessage,
 } from "../components";
 import { useGlobalState, useStep, useUMARegistry } from "../hooks";
 import Connection from "../hooks/Connection";
-import { ArrowUpRight } from "react-bootstrap-icons";
+
+import { deployEMP, EMPParameters } from "../utils";
+import { DEFAULT_SELECT_VALUE, SUCCESS_ROUTE } from "../constants";
+import Etherscan from "../hooks/Etherscan";
 
 import "react-datetime/css/react-datetime.css";
-import { deployEMP, EMPParameters } from "../utils";
-import { DEFAULT_SELECT_VALUE } from "../constants";
-import Etherscan from "../hooks/Etherscan";
 
 interface FormProps {
   expirationTimestamp: string;
@@ -52,13 +51,12 @@ export const CreateExpiringMultiParty = () => {
     selectedPriceIdentifier,
     selectedCollateralToken,
     setEmpAddress,
-    empAddress,
+    setTransactionHash
   } = useGlobalState();
-  const { getContractAddress, getContractInterface } = useUMARegistry();
-  const { setCurrentStepCompleted, getStepBefore, goStepBefore } = useStep();
+  const { getContractAddress } = useUMARegistry();
+  const { getStepBefore, goStepBefore } = useStep();
   const [error, setError] = useState<string | undefined>(undefined);
   const [empHasBeenCreated, setEMPHasBeenCreated] = useState(false);
-  const [hash, setHash] = useState<string | undefined>(undefined);
 
   const history = useHistory();
 
@@ -100,7 +98,7 @@ export const CreateExpiringMultiParty = () => {
           console.log("Receipt", receipt);
           console.log("ExpiringMultiPartyAddress", expiringMultiPartyAddress);
           setEmpAddress(expiringMultiPartyAddress);
-          setHash(receipt.transactionHash);
+          setTransactionHash(receipt.transactionHash);
         }
       }
     };
@@ -111,6 +109,7 @@ export const CreateExpiringMultiParty = () => {
         setSubmitting(false);
         setSelectedCollateralToken(undefined);
         setSelectedPriceIdentifier(DEFAULT_SELECT_VALUE);
+        history.push(`/${SUCCESS_ROUTE}`)
       })
       .catch((err) => {
         setError("Something unexpected happened. Please refresh and try again");
@@ -272,30 +271,9 @@ export const CreateExpiringMultiParty = () => {
             </Form>
           )}
         </Formik>
+
+        <ErrorMessage show={error !== undefined}>{error}</ErrorMessage>
       </React.Fragment>
-      {/* } */}
-      <SuccessMessage show={empHasBeenCreated}>
-        You have successfully deployed the expiring multiparty contract at:
-        <br />
-        <br />
-        {empAddress}
-        <br />
-        <br />
-        {hash && (
-          <React.Fragment>
-            <p>
-              View on Etherscan{" "}
-              <a target="_blank" href={getEtherscanUrl(hash)}>
-                <ArrowUpRight color="black" />
-              </a>
-            </p>
-          </React.Fragment>
-        )}
-      </SuccessMessage>
-
-      {/* <ErrorMessage show={true !== undefined}>Couldn't load data, please refresh</ErrorMessage> */}
-
-      {/* <MaterialAlert severity="success">This is a success alert — check it out!</MaterialAlert> */}
     </Box>
   );
 };

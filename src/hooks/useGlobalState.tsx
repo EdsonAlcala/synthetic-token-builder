@@ -11,6 +11,8 @@ interface IGlobalStateProvider {
   selectedPriceIdentifier: string;
   empAddress?: string;
   setEmpAddress: (newAddress: string) => void;
+  transactionHash?: string;
+  setTransactionHash: (newTxhash: string) => void
 }
 
 const defaultCollateral: TokenDataResponse = {
@@ -25,10 +27,12 @@ const defaultCollateral: TokenDataResponse = {
 const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultCollateral,
-  setSelectedCollateralToken: () => {},
-  setSelectedPriceIdentifier: () => {},
+  setSelectedCollateralToken: () => { },
+  setSelectedPriceIdentifier: () => { },
   empAddress: "",
-  setEmpAddress: () => {},
+  setEmpAddress: () => { },
+  transactionHash: "",
+  setTransactionHash: () => { },
 });
 /* tslint:enable */
 
@@ -44,6 +48,8 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
   >(undefined);
 
   const [empAddress, setEmpAddress] = useState<string | undefined>(undefined);
+  const [transactionHash, setTransactionHash] = useState<string | undefined>(undefined);
+
   return (
     <GlobalStateContext.Provider
       value={{
@@ -53,6 +59,8 @@ export const GlobalStateProvider: React.FC<PropsWithChildren<{}>> = ({
         setSelectedCollateralToken,
         empAddress,
         setEmpAddress,
+        transactionHash,
+        setTransactionHash
       }}
     >
       {children}
