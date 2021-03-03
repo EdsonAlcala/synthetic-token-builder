@@ -38,7 +38,7 @@
     "tslint:fix": "tslint --fix -p . -c tslint.json",
     "prettier:check": "prettier --write --list-different './src/**/*.tsx'",
     "prettier": "prettier --write \"src/**/*.{ts,,tsx,js,json}\"",
-    "deploy": "surge --project ./build --domain syntheticbuilder.xyz",
+    "deploy": "surge --project ./build --domain uma-token-builder.surge.sh",
     "test:deployEMP:kovan": "FORK_MODE=Kovan react-scripts test deployEMP.test.ts",
     "test:deployEMP:mainnet": "FORK_MODE=Mainnet react-scripts test deployEMP.test.ts",
     "test:verification:kovan": "NETWORK=Kovan react-scripts test verifyContract.test",
