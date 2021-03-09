@@ -24,7 +24,7 @@ describe("Deploy EMP Tests", () => {
 
   beforeAll(async () => {
     ganacheInstance = new Ganache({
-      port: 8549,
+      port: 8550,
       gasLimit: 10000000,
     });
     await ganacheInstance.start();
@@ -68,13 +68,10 @@ describe("Deploy EMP Tests", () => {
       syntheticSymbol: "Yield UMA June",
       collateralRequirement: 125,
       minSponsorTokens: 100,
-      liquidationLiveness: 7200,
-      withdrawalLiveness: 7200,
-      excessTokenBeneficiary: storeAddress,
     };
 
     const receipt = await deployEMP(values, network, signer);
 
-    // expect(receipt).toBeDefined()
+    expect(receipt).toBeDefined()
   });
 });
