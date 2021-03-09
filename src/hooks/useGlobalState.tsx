@@ -26,12 +26,12 @@ const defaultCollateral: TokenDataResponse = {
 const GlobalStateContext = React.createContext<IGlobalStateProvider>({
   selectedPriceIdentifier: "",
   selectedCollateralToken: defaultCollateral,
-  setSelectedCollateralToken: () => {},
-  setSelectedPriceIdentifier: () => {},
+  setSelectedCollateralToken: () => { },
+  setSelectedPriceIdentifier: () => { },
   empAddress: "",
-  setEmpAddress: () => {},
+  setEmpAddress: () => { },
   transactionHash: "",
-  setTransactionHash: () => {},
+  setTransactionHash: () => { },
 });
 /* tslint:enable */
 

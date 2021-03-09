@@ -4,50 +4,28 @@ import { ArrowUpRight } from "react-bootstrap-icons";
 import { BigNumber, Bytes, ethers } from "ethers";
 import { formatUnits, parseBytes32String } from "ethers/lib/utils";
 import styled from "styled-components";
+import {
+  createMuiTheme,
+  ThemeProvider as MuiThemeProvider
+} from "@material-ui/core/styles";
 
 import { useGlobalState } from "../hooks";
 import { Loader } from "../components";
 import Etherscan from "../hooks/Etherscan";
 
 import Connection from "../hooks/Connection";
-import { getUMAAbis } from "../utils";
-import { EthereumAddress } from "../types";
-import { FINANCIAL_PRODUCT_LIBRARY } from "../constants";
-
-interface EMPData {
-  expirationTimestamp: BigNumber
-  collateralCurrency: string
-  priceIdentifier: string | Bytes
-  tokenCurrency: string
-  collateralRequirement: BigNumber | string
-  disputeBondPercentage: BigNumber | string
-  disputerDisputeRewardPercentage: BigNumber | string
-  sponsorDisputeRewardPercentage: BigNumber | string
-  minSponsorTokens: BigNumber | string
-  timerAddress: string
-  cumulativeFeeMultiplier: BigNumber
-  rawTotalPositionCollateral: BigNumber
-  totalTokensOutstanding: BigNumber
-  liquidationLiveness: BigNumber
-  withdrawalLiveness: BigNumber
-  currentTime: BigNumber
-  isExpired: boolean
-  contractState: number
-  finderAddress: string
-  expiryPrice: BigNumber
-  tokenSymbol: string
-  tokenName: string
-  collateralDecimals: string
-  expireDate: string
-  // financialProductLibraryAddress: string
-}
+import { fromWei, getUMAAbis } from "../utils";
+import { CollateralInfo, EMPData, EMPDataParsed, EthereumAddress } from "../types";
+import { FINANCIAL_PRODUCT_LIBRARY, INFINITY } from "../constants";
+import { Mint } from "../components/Mint";
 
 export const EMPCreatedView: React.FC = () => {
-  const { signer } = Connection.useContainer()
+  const { signer, address, block$ } = Connection.useContainer()
   const { empAddress, transactionHash } = useGlobalState();
   const { getEtherscanUrl } = Etherscan.useContainer();
-  const [empState, setEMPState] = useState<EMPData | undefined>(undefined)
-
+  const [empState, setEMPState] = useState<EMPDataParsed | undefined>(undefined)
+  const [collateralState, setCollateralState] = useState<CollateralInfo | undefined>(undefined)
+  const [collateralInstance, setCollateralInstance] = useState<ethers.Contract | undefined>(undefined)
   const [showContractDeploymentDetails, setShowContractDeploymentDetails] = useState(false)
   const [showMintModal, setShowMintModal] = useState(false)
 
@@ -66,8 +44,33 @@ export const EMPCreatedView: React.FC = () => {
   const handleCloseMintModal = () => {
     setShowMintModal(false)
   }
+
+  const getCollateralInfo = async (collateralInstanceNew: ethers.Contract) => {
+    const collateralDecimals = (await collateralInstanceNew.decimals()).toString()
+    const collateralSymbol = (await collateralInstanceNew.symbol()).toString()
+    const allowanceRaw: BigNumber = await collateralInstanceNew.allowance(
+      address,
+      empAddress
+    );
+    const newAllowance = allowanceRaw.eq(ethers.constants.MaxUint256)
+      ? INFINITY
+      : fromWei(allowanceRaw, collateralDecimals);
+
+    const balanceRaw: BigNumber = await collateralInstanceNew.balanceOf(
+      address
+    );
+    const newBalance = fromWei(balanceRaw, collateralDecimals)
+
+    setCollateralState({
+      collateralDecimals,
+      collateralSymbol,
+      collateralAllowance: newAllowance,
+      collateralBalance: newBalance
+    })
+  }
+
   useEffect(() => {
-    if (empAddress && signer !== null) {
+    if (empAddress && signer !== null && address) {
       const getAllEMPData = async () => {
         const umaABIs = getUMAAbis();
 
@@ -91,16 +94,8 @@ export const EMPCreatedView: React.FC = () => {
           empInstance.tokenCurrency(),
           empInstance.collateralRequirement(),
           empInstance.minSponsorTokens(),
-          empInstance.timerAddress(),
-          empInstance.cumulativeFeeMultiplier(),
-          empInstance.rawTotalPositionCollateral(),
-          empInstance.totalTokensOutstanding(),
           empInstance.liquidationLiveness(),
           empInstance.withdrawalLiveness(),
-          empInstance.getCurrentTime(),
-          empInstance.contractState(),
-          empInstance.finder(),
-          empInstance.expiryPrice(),
           empInstance.disputeBondPercentage(),
           empInstance.disputerDisputeRewardPercentage(),
           empInstance.sponsorDisputeRewardPercentage()
@@ -113,24 +108,11 @@ export const EMPCreatedView: React.FC = () => {
           tokenCurrency: res[3] as EthereumAddress,
           collateralRequirement: res[4] as BigNumber,
           minSponsorTokens: res[5] as BigNumber,
-          timerAddress: res[6] as EthereumAddress,
-          cumulativeFeeMultiplier: res[7] as BigNumber,
-          rawTotalPositionCollateral: res[8] as BigNumber,
-          totalTokensOutstanding: res[9] as BigNumber,
-          liquidationLiveness: res[10] as BigNumber,
-          withdrawalLiveness: res[11] as BigNumber,
-          currentTime: res[12] as BigNumber,
-          isExpired: Number(res[12]) >= Number(res[0]),
-          contractState: Number(res[13]),
-          finderAddress: res[14] as EthereumAddress,
-          expiryPrice: res[15] as BigNumber,
-          disputeBondPercentage: res[16] as BigNumber,
-          disputerDisputeRewardPercentage: res[17] as BigNumber,
-          sponsorDisputeRewardPercentage: res[18] as BigNumber,
-          tokenName: "",
-          tokenSymbol: "",
-          collateralDecimals: "",
-          expireDate: ""
+          liquidationLiveness: res[6] as BigNumber,
+          withdrawalLiveness: res[7] as BigNumber,
+          disputeBondPercentage: res[8] as BigNumber,
+          disputerDisputeRewardPercentage: res[9] as BigNumber,
+          sponsorDisputeRewardPercentage: res[10] as BigNumber
         }
 
         const tokenInstance = new ethers.Contract(
@@ -139,7 +121,7 @@ export const EMPCreatedView: React.FC = () => {
           signer
         );
 
-        const collateralInstance = new ethers.Contract(
+        const collateralInstanceNew = new ethers.Contract(
           newState.collateralCurrency,
           erc20StandardInterface,
           signer
@@ -147,8 +129,8 @@ export const EMPCreatedView: React.FC = () => {
 
         const tokenName = (await tokenInstance.name()).toString();
         const tokenSymbol = (await tokenInstance.symbol()).toString();
-        const collateralDecimals = (await collateralInstance.decimals()).toString()
-
+        const tokenDecimals = (await tokenInstance.decimals()).toString();
+        const collateralDecimals = (await collateralInstanceNew.decimals()).toString()
         const priceIdentifierParsed = parseBytes32String(newState.priceIdentifier)
         const collateralRequirementPercentage = parseFloat(formatUnits(newState.collateralRequirement, collateralDecimals)).toString()
         const expireDate = new Date(newState.expirationTimestamp.toNumber() * 1000).toLocaleString('en-GB', { timeZone: 'UTC' })
@@ -157,26 +139,43 @@ export const EMPCreatedView: React.FC = () => {
         const disputerDisputeRewardPercentage = `${(parseFloat(formatUnits(newState.disputerDisputeRewardPercentage)) * 100)} %`
         const sponsorDisputeRewardPercentage = `${(parseFloat(formatUnits(newState.sponsorDisputeRewardPercentage)) * 100)} %`
 
-        setEMPState({
-          ...newState,
+        const dataParsed: EMPDataParsed = {
+          collateralCurrency: newState.collateralCurrency,
           priceIdentifier: priceIdentifierParsed,
           tokenName,
           tokenSymbol,
+          tokenDecimals,
           collateralRequirement: collateralRequirementPercentage,
-          collateralDecimals,
           expireDate,
           minSponsorTokens,
           disputeBondPercentage,
           disputerDisputeRewardPercentage,
-          sponsorDisputeRewardPercentage
-        })
+          sponsorDisputeRewardPercentage,
+          liquidationLiveness: newState.liquidationLiveness.toNumber(),
+          withdrawalLiveness: newState.withdrawalLiveness.toNumber(),
+
+        }
+        setEMPState(dataParsed)
+        setCollateralInstance(collateralInstanceNew)
       }
 
       getAllEMPData()
     }
-  }, [empAddress, signer])
+  }, [empAddress, signer, address])
 
-  if (empAddress && transactionHash && empState) {
+  // get info on each new block
+  useEffect(() => {
+    if (block$ && collateralInstance) {
+      const sub = block$.subscribe(() => {
+        getCollateralInfo(collateralInstance)
+      });
+      return () => sub.unsubscribe();
+    }
+  }, [ // eslint-disable-line
+    block$, collateralInstance
+  ]);
+
+  if (empAddress && transactionHash && empState && collateralInstance && collateralState && address !== null && signer !== null) {
     return (
       <Box
         display="grid"
@@ -262,7 +261,9 @@ export const EMPCreatedView: React.FC = () => {
 
         <Dialog maxWidth="md" open={showMintModal} onClose={handleCloseMintModal}>
           <DialogContent style={{ background: 'white', color: 'black', padding: "2em 4em 1em" }}>
-
+            <MuiThemeProvider theme={muiTheme}>
+              <Mint signer={signer} address={address} empState={empState} collateralInstance={collateralInstance} empAddress={empAddress} collateralState={collateralState} />
+            </MuiThemeProvider>
           </DialogContent>
         </Dialog>
       </Box>
@@ -295,3 +296,46 @@ const MintButton = styled(Button)`
     border: 1px solid rgba(255, 255, 255, 0.23);
     text-transform: capitalize;
 `;
+
+const muiTheme = createMuiTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#E13938",
+      contrastText: "#fff",
+      dark: "#000",
+    },
+    secondary: {
+      contrastText: "#fff",
+      main: "#fff",
+      dark: "#000",
+    },
+  },
+  typography: {
+    fontSize: 16,
+    fontFamily: [
+      `Noto Sans JP`,
+      `-apple-system`,
+      `BlinkMacSystemFont`,
+      `"Segoe UI"`,
+      `sans-serif`,
+    ].join(","),
+  },
+});
+
+muiTheme.typography.body1 = {
+  [muiTheme.breakpoints.down("sm")]: {
+    fontSize: 15,
+  },
+  [muiTheme.breakpoints.down("xs")]: {
+    fontSize: 14,
+  },
+};
+muiTheme.typography.h4 = {
+  [muiTheme.breakpoints.down("sm")]: {
+    fontSize: "1.4em",
+  },
+  [muiTheme.breakpoints.up("sm")]: {
+    fontSize: "2.1em",
+  },
+};

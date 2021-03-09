@@ -6,19 +6,33 @@ export interface EMPData {
   priceIdentifier: Bytes;
   tokenCurrency: string;
   collateralRequirement: BigNumber;
-  disputeBondPct: BigNumber;
-  disputerDisputeRewardPct: BigNumber;
-  sponsorDisputeRewardPct: BigNumber;
+  disputeBondPercentage: BigNumber;
+  disputerDisputeRewardPercentage: BigNumber;
+  sponsorDisputeRewardPercentage: BigNumber
   minSponsorTokens: BigNumber;
-  timerAddress: string;
-  cumulativeFeeMultiplier: BigNumber;
-  rawTotalPositionCollateral: BigNumber;
-  totalTokensOutstanding: BigNumber;
   liquidationLiveness: BigNumber;
   withdrawalLiveness: BigNumber;
-  currentTime: BigNumber;
-  isExpired: boolean;
-  contractState: number;
-  finderAddress: string;
-  expiryPrice: BigNumber;
+}
+
+export interface EMPDataParsed {
+  collateralCurrency: string
+  priceIdentifier: string
+  collateralRequirement: string
+  disputeBondPercentage: string
+  disputerDisputeRewardPercentage: string
+  sponsorDisputeRewardPercentage: string
+  minSponsorTokens: string
+  liquidationLiveness: number
+  withdrawalLiveness: number
+  tokenSymbol: string
+  tokenName: string
+  tokenDecimals: string
+  expireDate: string
+}
+
+export interface CollateralInfo {
+  collateralDecimals: string
+  collateralBalance: string
+  collateralAllowance: string
+  collateralSymbol: string
 }
