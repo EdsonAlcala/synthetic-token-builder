@@ -79,8 +79,7 @@ export const SelectPriceIdentifier = () => {
     <Box>
       <StyledTitle variant="subtitle1">Select price identifier</StyledTitle>
       <Typography variant="subtitle2">
-        This is the token that will serve as collateral for the synthethic
-        token.
+        This is important to ensure that the UMA DVM can resolve any disputes for these synthethic tokens.
       </Typography>
 
       <Box mt="1em">
