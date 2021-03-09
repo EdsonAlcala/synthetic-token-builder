@@ -1,8 +1,12 @@
 import { BigNumber, ethers, utils, ContractReceipt } from "ethers";
 import { toWei } from "web3-utils";
 import {
+  DEFAULT_DISPUTER_DISPUTE_REWARD_PERCENTAGE,
+  DEFAULT_DISPUTE_BOND_PERCENTAGE,
   DEFAULT_LIQUIDATION_LIVENESS,
+  DEFAULT_SPONSOR_DISPUTE_REWARD_PERCENTAGE,
   DEFAULT_WITHDRAWAL_LIVENESS,
+  FINANCIAL_PRODUCT_LIBRARY,
 } from "../constants";
 
 import { EthereumAddress, Percentage, Timestamp } from "../types";
@@ -46,7 +50,7 @@ export const deployEMP = async (
     disputeBondPercentage,
     sponsorDisputeRewardPercentage,
     disputerDisputeRewardPercentage,
-    financialProductLibraryAddress = "0x0000000000000000000000000000000000000000", // 0x0 because, by default, we don't want to use a custom library.
+
   } = values;
 
   const params = {
@@ -60,21 +64,21 @@ export const deployEMP = async (
     },
     disputeBondPercentage: {
       rawValue: toWei(
-        disputeBondPercentage ? `${disputeBondPercentage / 100}` : "0.1"
+        disputeBondPercentage ? `${disputeBondPercentage / 100}` : DEFAULT_DISPUTE_BOND_PERCENTAGE
       ), // 0.1 -> 10 % dispute bond.
     },
     sponsorDisputeRewardPercentage: {
       rawValue: toWei(
         sponsorDisputeRewardPercentage
           ? `${sponsorDisputeRewardPercentage / 100}`
-          : "0.05"
+          : DEFAULT_SPONSOR_DISPUTE_REWARD_PERCENTAGE
       ), // 0.05 -> 5% reward for sponsors who are disputed invalidly.
     },
     disputerDisputeRewardPercentage: {
       rawValue: toWei(
         disputerDisputeRewardPercentage
           ? `${disputerDisputeRewardPercentage / 100}`
-          : "0.2"
+          : DEFAULT_DISPUTER_DISPUTE_REWARD_PERCENTAGE
       ), // 0.2 -> 20% reward for correct disputes.
     },
     minSponsorTokens: {
@@ -82,7 +86,7 @@ export const deployEMP = async (
     },
     liquidationLiveness: BigNumber.from(DEFAULT_LIQUIDATION_LIVENESS),
     withdrawalLiveness: BigNumber.from(DEFAULT_WITHDRAWAL_LIVENESS),
-    financialProductLibraryAddress,
+    financialProductLibraryAddress: FINANCIAL_PRODUCT_LIBRARY // 0x0 because, by default, we don't want to use a custom library.
   };
 
   const umaABIs = getUMAAbis();
