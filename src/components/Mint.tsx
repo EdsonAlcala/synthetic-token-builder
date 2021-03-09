@@ -119,17 +119,17 @@ export const Mint: React.FC<MintProps> = ({
 
   return (
     <React.Fragment>
-      <Grid container>
-        <Grid item xs={6}>
-          <Grid container spacing={3}>
-            <Grid item md={12} sm={12} xs={12}>
+      <Grid container={true}>
+        <Grid item={true} xs={6}>
+          <Grid container={true} spacing={3}>
+            <Grid item={true} md={12} sm={12} xs={12}>
               <FormTitle>{`Mint new synthetic tokens (${tokenSymbol})`}</FormTitle>
             </Grid>
 
-            <Grid item md={10} sm={10} xs={10}>
+            <Grid item={true} md={10} sm={10} xs={10}>
               <TextField
                 size="small"
-                fullWidth
+                fullWidth={true}
                 type="number"
                 variant="outlined"
                 label={`Tokens (${tokenSymbol})`}
@@ -146,10 +146,10 @@ export const Mint: React.FC<MintProps> = ({
               />
             </Grid>
 
-            <Grid item md={10} sm={10} xs={10}>
+            <Grid item={true} md={10} sm={10} xs={10}>
               <TextField
                 size="small"
-                fullWidth
+                fullWidth={true}
                 type="number"
                 variant="outlined"
                 label={`Collateral (${collateralSymbol})`}
@@ -166,7 +166,7 @@ export const Mint: React.FC<MintProps> = ({
               />
             </Grid>
 
-            <Grid item md={10} sm={10} xs={10}>
+            <Grid item={true} md={10} sm={10} xs={10}>
               <Box py={0}>
                 {needAllowance && (
                   <FormButton
@@ -197,7 +197,13 @@ export const Mint: React.FC<MintProps> = ({
               </Box>
             </Grid>
 
-            <Grid item md={10} sm={10} xs={10} style={{ paddingTop: "0" }}>
+            <Grid
+              item={true}
+              md={10}
+              sm={10}
+              xs={10}
+              style={{ paddingTop: "0" }}
+            >
               <TransactionResultArea
                 hash={hash}
                 error={error}
@@ -206,7 +212,7 @@ export const Mint: React.FC<MintProps> = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item={true} xs={6}>
           <Box
             height="100%"
             flexDirection="column"

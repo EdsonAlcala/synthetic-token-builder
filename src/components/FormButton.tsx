@@ -19,8 +19,8 @@ export const FormButton: React.FC<FormButtonProps> = ({
   return (
     <ColorButton
       color="primary"
-      disableElevation
-      fullWidth
+      disableElevation={true}
+      fullWidth={true}
       variant="contained"
       onClick={onClick}
       disabled={disabled}
