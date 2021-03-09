@@ -66,9 +66,9 @@ export const RightPanel: React.FC = () => {
               direction="horizontal"
             >
               <Description style={{ justifyContent: "space-between", display: "flex", alignItems: "center", width: "100%", flexDirection: "row" }}>
-                <RowItem label="Name" value={selectedPriceIdentifier} />
+                <RowItem label="Name" value={selectedPriceIdentifier} noMargin={true} />
 
-                <a style={{ fontSize: "0.9em" }} href="https://docs.umaproject.org/uma-tokenholders/approved-price-identifiers" target="_black" rel="no-referrer">Learn more</a>
+                <a style={{ fontSize: "0.9em" }} href="https://docs.umaproject.org/uma-tokenholders/approved-price-identifiers" target="_black" rel="noreferrer">Learn more</a>
 
               </Description>
 
@@ -81,18 +81,19 @@ export const RightPanel: React.FC = () => {
 };
 
 const shortAddress = (publicKey: string) =>
-  `${publicKey?.substr(0, 20)}...${publicKey?.substr(-17)}`
+  `${publicKey?.substr(0, 20)}..${publicKey?.substr(-18)}`
 
 
 interface RowItemProps {
   label: string;
   value: string;
   href?: string
+  noMargin?: boolean
 }
 
-const RowItem: React.FC<RowItemProps> = ({ label, value }) => {
+const RowItem: React.FC<RowItemProps> = ({ label, value, noMargin = false }) => {
   return (
-    <p style={{ fontWeight: "bold" }}>
+    <p style={{ fontWeight: "bold", marginBottom: noMargin ? "0" : "1em" }} >
       {label}: <span style={{ fontWeight: "lighter" }}>{value}</span>
     </p>
   );
@@ -101,7 +102,7 @@ const RowItem: React.FC<RowItemProps> = ({ label, value }) => {
 const RowItemLink: React.FC<RowItemProps> = ({ label, value, href }) => {
   return (
     <p style={{ fontWeight: "bold", fontSize: "0.9em" }}>
-      {label}: <a href={href} target="_blank" rel="no-referrer" style={{ fontWeight: "lighter" }}>{value}</a>
+      {label}: <a href={href} target="_blank" rel="noreferrer" style={{ fontWeight: "lighter" }}>{value}</a>
     </p>
   );
 };
