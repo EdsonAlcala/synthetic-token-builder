@@ -215,11 +215,8 @@ export const EMPCreatedView: React.FC = () => {
       });
       return () => sub.unsubscribe();
     }
-  }, [
-    // eslint-disable-line
-    block$,
-    collateralInstance,
-  ]);
+    // eslint-disable-next-line
+  }, [block$, collateralInstance]);
 
   if (
     empAddress &&

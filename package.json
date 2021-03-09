@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "PORT=8081 react-scripts start",
-    "build": "NODE_OPTIONS=--max_old_space_size=4096 react-scripts build",
+    "build": "CI=true NODE_OPTIONS=--max_old_space_size=4096 react-scripts build",
     "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test",
     "eject": "react-scripts eject",
