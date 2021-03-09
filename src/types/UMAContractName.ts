@@ -18,4 +18,5 @@ export type UMAContractName =
   | "ExpiringMultiParty"
   | "PerpetualLib"
   | "PerpetualCreator"
-  | "ERC20";
+  | "ERC20"
+  | "IERC20Standard";

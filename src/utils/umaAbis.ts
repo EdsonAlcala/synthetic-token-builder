@@ -5,11 +5,13 @@ import ExpiringMultiPartyCreatorArtifact from "@uma/core/build/contracts/Expirin
 import WETH9Artifact from "@uma/core/build/contracts/WETH9.json";
 import ERC20Artifact from "@uma/core/build/contracts/ERC20.json";
 import ExpiringMultiPartyArtifact from "@uma/core/build/contracts/ExpiringMultiParty.json";
+import IERC20Artifact from "@uma/core/build/contracts/IERC20Standard.json";
 
 export const getUMAAbis = () => {
   const interfaces = new Map<UMAContractName, Fragment[]>();
   interfaces.set("WETH9", WETH9Artifact.abi as any);
   interfaces.set("ERC20", ERC20Artifact.abi as any);
+  interfaces.set("IERC20Standard", IERC20Artifact.abi as any);
   interfaces.set("ExpiringMultiParty", ExpiringMultiPartyArtifact.abi as any);
   interfaces.set(
     "ExpiringMultiPartyCreator",
