@@ -213,28 +213,6 @@ export const CreateExpiringMultiParty = () => {
                 helptext="Minimum number of tokens in a sponsor's position."
               />
 
-              {/* <FormItem
-                key="withdrawalLiveness"
-                label="Withdrawal liveness (in seconds)"
-                field="withdrawalLiveness"
-                labelWidth={3}
-                placeHolder="7200"
-                type="number"
-                showhelp={true}
-                helptext="Liveness delay, in seconds, for pending withdrawals."
-              />
-
-              <FormItem
-                key="liquidationLiveness"
-                label="Liquidation liveness (in seconds)"
-                field="liquidationLiveness"
-                labelWidth={3}
-                placeHolder="7200"
-                type="number"
-                showhelp={true}
-                helptext="Amount of time in seconds for pending liquidation before expiry."
-              /> */}
-
               {!empHasBeenCreated && (
                 <div
                   style={{
