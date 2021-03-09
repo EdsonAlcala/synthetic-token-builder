@@ -21,15 +21,15 @@ export const SyntheticTokenBuilderView: React.FC = () => {
           {connected ? (
             <TokenBuilderSection />
           ) : (
-            <Box
-              display="flex"
-              height="70vh"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography>Connect to a network</Typography>
-            </Box>
-          )}
+              <Box
+                display="flex"
+                height="70vh"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Typography>Connect to a network</Typography>
+              </Box>
+            )}
         </Box>
       </Box>
     </Container>

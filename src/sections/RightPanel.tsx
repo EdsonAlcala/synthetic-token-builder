@@ -9,11 +9,13 @@ import Connection from "../hooks/Connection";
 import { BigNumber, ethers } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 import { DEFAULT_SELECT_VALUE } from "../constants";
+import Etherscan from "../hooks/Etherscan";
 
 export const RightPanel: React.FC = () => {
   const { address, provider } = Connection.useContainer();
   const { selectedCollateralToken, selectedPriceIdentifier } = useGlobalState();
   const [collateralBalance, setCollateralBalance] = useState("0");
+  const { getEtherscanUrl } = Etherscan.useContainer()
 
   useEffect(() => {
     if (
@@ -48,6 +50,9 @@ export const RightPanel: React.FC = () => {
               <RowItem label="Symbol" value={selectedCollateralToken.symbol} />
 
               <RowItem label="Balance" value={collateralBalance} />
+
+              <RowItemLink label="Address" href={getEtherscanUrl(selectedCollateralToken.address)} value={shortAddress(selectedCollateralToken.address)} />
+
             </AccordionContentBody>
           </React.Fragment>
         </Card>
@@ -60,9 +65,13 @@ export const RightPanel: React.FC = () => {
               className="borderBottomExceptLast"
               direction="horizontal"
             >
-              <Description style={{ justifyContent: "center" }}>
+              <Description style={{ justifyContent: "space-between", display: "flex", alignItems: "center", width: "100%", flexDirection: "row" }}>
                 <RowItem label="Name" value={selectedPriceIdentifier} />
+
+                <a style={{ fontSize: "0.9em" }} href="https://docs.umaproject.org/uma-tokenholders/approved-price-identifiers" target="_black" rel="no-referrer">Learn more</a>
+
               </Description>
+
             </AccordionContentBody>
           </React.Fragment>
         </Card>
@@ -71,9 +80,14 @@ export const RightPanel: React.FC = () => {
   );
 };
 
+const shortAddress = (publicKey: string) =>
+  `${publicKey?.substr(0, 20)}...${publicKey?.substr(-17)}`
+
+
 interface RowItemProps {
   label: string;
   value: string;
+  href?: string
 }
 
 const RowItem: React.FC<RowItemProps> = ({ label, value }) => {
@@ -83,6 +97,15 @@ const RowItem: React.FC<RowItemProps> = ({ label, value }) => {
     </p>
   );
 };
+
+const RowItemLink: React.FC<RowItemProps> = ({ label, value, href }) => {
+  return (
+    <p style={{ fontWeight: "bold", fontSize: "0.9em" }}>
+      {label}: <a href={href} target="_blank" rel="no-referrer" style={{ fontWeight: "lighter" }}>{value}</a>
+    </p>
+  );
+};
+
 const AccordionContentBody = styled.div<{ direction?: string }>`
   display: flex;
   padding: 0.5em 1em;

@@ -23,3 +23,9 @@ export const DAI = "DAI";
 export const OneInchUSDPriceIdentifier = "1INCHUSD";
 
 export const SUCCESS_ROUTE = "congratulations";
+
+export const MINIMUM_COLLATERAL_REQUIREMENT = 110
+
+export const DEFAULT_LIQUIDATION_LIVENESS = 7200
+
+export const DEFAULT_WITHDRAWAL_LIVENESS = 7200

@@ -1,5 +1,6 @@
 import { BigNumber, ethers, utils, ContractReceipt } from "ethers";
 import { toWei } from "web3-utils";
+import { DEFAULT_LIQUIDATION_LIVENESS, DEFAULT_WITHDRAWAL_LIVENESS } from "../constants";
 
 import { EthereumAddress, Percentage, Timestamp } from "../types";
 import { getUMAAbis } from "./umaAbis";
@@ -19,8 +20,8 @@ export interface EMPParameters {
   disputerDisputeRewardPercentage?: Percentage;
   minSponsorTokens: number;
 
-  liquidationLiveness: number;
-  withdrawalLiveness: number;
+  // liquidationLiveness: number;
+  // withdrawalLiveness: number;
   financialProductLibraryAddress?: EthereumAddress;
 }
 
@@ -76,8 +77,8 @@ export const deployEMP = async (
     minSponsorTokens: {
       rawValue: toWei(`${values.minSponsorTokens}`),
     },
-    liquidationLiveness: BigNumber.from(values.liquidationLiveness),
-    withdrawalLiveness: BigNumber.from(values.withdrawalLiveness),
+    liquidationLiveness: BigNumber.from(DEFAULT_LIQUIDATION_LIVENESS),
+    withdrawalLiveness: BigNumber.from(DEFAULT_WITHDRAWAL_LIVENESS),
     financialProductLibraryAddress,
   };
 
