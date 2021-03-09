@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import { KOVAN_NETWORK, MAINNET_NETWORK } from "../constants";
 import { getDai } from "./getDai";
 import { IGanacheOptions } from "./IGanacheOptions";
+import { getUMA } from './getUMA'
 
 export enum Status {
   Running = "Running",
@@ -88,6 +89,10 @@ export class Ganache {
           );
           const wallet = new ethers.Wallet(PRIV_KEY);
           await getDai(wallet.connect(provider));
+
+          // get uma
+          await getUMA(wallet.connect(provider))
+
           resolve(blockchain);
         }
       );
