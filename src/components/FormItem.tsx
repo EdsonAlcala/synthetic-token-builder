@@ -3,9 +3,9 @@ import { ErrorMessage, Field, useField } from "formik";
 import BootstrapForm from "react-bootstrap/Form";
 import Datetime from "react-datetime";
 import Col from "react-bootstrap/Col";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger"
-import Tooltip from "react-bootstrap/Tooltip"
-import moment from 'moment';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import moment from "moment";
 
 interface Props {
   label: string;
@@ -61,8 +61,8 @@ export const FormItem: React.FC<Props> = ({
 
 const DateComponent = (props: any) => {
   const [, , helpers] = useField(props.name);
-  const yesterday = moment().subtract(1, 'day');
-  const valid = function (current: any) {
+  const yesterday = moment().subtract(1, "day");
+  const valid = (current: any) => {
     return current.isAfter(yesterday);
   };
   const { setValue } = helpers;
@@ -73,11 +73,17 @@ const DateComponent = (props: any) => {
     }
   };
 
-  return <Datetime className="custom" onChange={handleOnChange} isValidDate={valid} />;
+  return (
+    <Datetime
+      className="custom"
+      onChange={handleOnChange}
+      isValidDate={valid}
+    />
+  );
 };
 
 const CustomInputComponent = (props: Props) => {
-  const popover = <Tooltip id={props.label}>{props.helptext}</Tooltip>
+  const popover = <Tooltip id={props.label}>{props.helptext}</Tooltip>;
   return (
     <div
       style={{

@@ -1,6 +1,9 @@
 import { BigNumber, ethers, utils, ContractReceipt } from "ethers";
 import { toWei } from "web3-utils";
-import { DEFAULT_LIQUIDATION_LIVENESS, DEFAULT_WITHDRAWAL_LIVENESS } from "../constants";
+import {
+  DEFAULT_LIQUIDATION_LIVENESS,
+  DEFAULT_WITHDRAWAL_LIVENESS,
+} from "../constants";
 
 import { EthereumAddress, Percentage, Timestamp } from "../types";
 import { getUMAAbis } from "./umaAbis";

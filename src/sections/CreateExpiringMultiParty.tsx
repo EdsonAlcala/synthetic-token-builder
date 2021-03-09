@@ -14,7 +14,11 @@ import { useGlobalState, useStep, useUMARegistry } from "../hooks";
 import Connection from "../hooks/Connection";
 
 import { deployEMP, EMPParameters } from "../utils";
-import { DEFAULT_SELECT_VALUE, MINIMUM_COLLATERAL_REQUIREMENT, SUCCESS_ROUTE } from "../constants";
+import {
+  DEFAULT_SELECT_VALUE,
+  MINIMUM_COLLATERAL_REQUIREMENT,
+  SUCCESS_ROUTE,
+} from "../constants";
 
 import "react-datetime/css/react-datetime.css";
 
@@ -83,7 +87,7 @@ export const CreateExpiringMultiParty = () => {
           syntheticName: values.syntheticName,
           syntheticSymbol: values.syntheticSymbol,
           collateralRequirement: parseInt(values.collateralRequirement, 10),
-          minSponsorTokens: parseInt(values.minSponsorTokens, 10)
+          minSponsorTokens: parseInt(values.minSponsorTokens, 10),
           // liquidationLiveness: parseInt(values.liquidationLiveness, 10),
           // withdrawalLiveness: parseInt(values.withdrawalLiveness, 10),
         };
@@ -137,7 +141,10 @@ export const CreateExpiringMultiParty = () => {
 
             if (!values.collateralRequirement) {
               errors.collateralRequirement = "Required";
-            } else if (parseInt(values.collateralRequirement, 10) < MINIMUM_COLLATERAL_REQUIREMENT) {
+            } else if (
+              parseInt(values.collateralRequirement, 10) <
+              MINIMUM_COLLATERAL_REQUIREMENT
+            ) {
               errors.collateralRequirement = `Value should be higher than ${MINIMUM_COLLATERAL_REQUIREMENT}`;
             }
 

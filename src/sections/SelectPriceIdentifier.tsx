@@ -79,7 +79,8 @@ export const SelectPriceIdentifier = () => {
     <Box>
       <StyledTitle variant="subtitle1">Select price identifier</StyledTitle>
       <Typography variant="subtitle2">
-        This is important to ensure that the UMA DVM can resolve any disputes for these synthethic tokens.
+        This is important to ensure that the UMA DVM can resolve any disputes
+        for these synthethic tokens.
       </Typography>
 
       <Box mt="1em">
