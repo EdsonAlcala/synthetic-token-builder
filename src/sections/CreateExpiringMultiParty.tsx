@@ -183,6 +183,8 @@ export const CreateExpiringMultiParty = () => {
                 field="syntheticName"
                 labelWidth={3}
                 placeHolder="Synthetic Token"
+                showhelp={true}
+                helptext="The name of the synthetic token you are going to create."
               />
 
               <FormItem
@@ -191,6 +193,8 @@ export const CreateExpiringMultiParty = () => {
                 field="syntheticSymbol"
                 labelWidth={3}
                 placeHolder="SNT"
+                showhelp={true}
+                helptext="The symbol of the synthetic token you are going to create."
               />
 
               <FormItem
@@ -200,6 +204,8 @@ export const CreateExpiringMultiParty = () => {
                 labelWidth={3}
                 placeHolder="Percentage required (i.e. 125)"
                 type="number"
+                showhelp={true}
+                helptext="The total percentage of collateral that token sponsors have to maintain in their positions."
               />
 
               <FormItem

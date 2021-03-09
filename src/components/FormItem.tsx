@@ -50,6 +50,7 @@ export const FormItem: React.FC<Props> = ({
             helptext={helptext}
             className={customClass}
             size={size}
+            showhelp={showhelp}
           />
           <ErrorMessage className="red" name={field} component="div" />
         </Col>
