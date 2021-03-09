@@ -14,7 +14,7 @@ import { useGlobalState, useStep, useUMARegistry } from "../hooks";
 import Connection from "../hooks/Connection";
 
 import { deployEMP, EMPParameters } from "../utils";
-import { DEFAULT_SELECT_VALUE, SUCCESS_ROUTE } from "../constants";
+import { DEFAULT_SELECT_VALUE, MINIMUM_COLLATERAL_REQUIREMENT, SUCCESS_ROUTE } from "../constants";
 
 import "react-datetime/css/react-datetime.css";
 
@@ -25,8 +25,8 @@ interface FormProps {
   collateralRequirement: string;
   disputeBond: string;
   minSponsorTokens: string;
-  withdrawalLiveness: string;
-  liquidationLiveness: string;
+  // withdrawalLiveness: string;
+  // liquidationLiveness: string;
 }
 
 const initialValues: FormProps = {
@@ -36,8 +36,8 @@ const initialValues: FormProps = {
   collateralRequirement: "",
   disputeBond: "",
   minSponsorTokens: "",
-  withdrawalLiveness: "",
-  liquidationLiveness: "",
+  // withdrawalLiveness: "",
+  // liquidationLiveness: "",
 };
 
 export const CreateExpiringMultiParty = () => {
@@ -83,9 +83,9 @@ export const CreateExpiringMultiParty = () => {
           syntheticName: values.syntheticName,
           syntheticSymbol: values.syntheticSymbol,
           collateralRequirement: parseInt(values.collateralRequirement, 10),
-          minSponsorTokens: parseInt(values.minSponsorTokens, 10),
-          liquidationLiveness: parseInt(values.liquidationLiveness, 10),
-          withdrawalLiveness: parseInt(values.withdrawalLiveness, 10),
+          minSponsorTokens: parseInt(values.minSponsorTokens, 10)
+          // liquidationLiveness: parseInt(values.liquidationLiveness, 10),
+          // withdrawalLiveness: parseInt(values.withdrawalLiveness, 10),
         };
 
         const result = await deployEMP(params, network, signer);
@@ -137,8 +137,8 @@ export const CreateExpiringMultiParty = () => {
 
             if (!values.collateralRequirement) {
               errors.collateralRequirement = "Required";
-            } else if (parseInt(values.collateralRequirement, 10) < 100) {
-              errors.collateralRequirement = "Value should be higher than 100";
+            } else if (parseInt(values.collateralRequirement, 10) < MINIMUM_COLLATERAL_REQUIREMENT) {
+              errors.collateralRequirement = `Value should be higher than ${MINIMUM_COLLATERAL_REQUIREMENT}`;
             }
 
             if (!values.minSponsorTokens) {
@@ -147,17 +147,17 @@ export const CreateExpiringMultiParty = () => {
               errors.minSponsorTokens = "Value cannot be negative";
             }
 
-            if (!values.withdrawalLiveness) {
-              errors.withdrawalLiveness = "Required";
-            } else if (parseInt(values.withdrawalLiveness, 10) < 0) {
-              errors.withdrawalLiveness = "Value cannot be negative";
-            }
+            // if (!values.withdrawalLiveness) {
+            //   errors.withdrawalLiveness = "Required";
+            // } else if (parseInt(values.withdrawalLiveness, 10) < 0) {
+            //   errors.withdrawalLiveness = "Value cannot be negative";
+            // }
 
-            if (!values.liquidationLiveness) {
-              errors.liquidationLiveness = "Required";
-            } else if (parseInt(values.liquidationLiveness, 10) < 0) {
-              errors.liquidationLiveness = "Value cannot be negative";
-            }
+            // if (!values.liquidationLiveness) {
+            //   errors.liquidationLiveness = "Required";
+            // } else if (parseInt(values.liquidationLiveness, 10) < 0) {
+            //   errors.liquidationLiveness = "Value cannot be negative";
+            // }
 
             return errors;
           }}
@@ -213,7 +213,7 @@ export const CreateExpiringMultiParty = () => {
                 helptext="Minimum number of tokens in a sponsor's position."
               />
 
-              <FormItem
+              {/* <FormItem
                 key="withdrawalLiveness"
                 label="Withdrawal liveness (in seconds)"
                 field="withdrawalLiveness"
@@ -233,7 +233,7 @@ export const CreateExpiringMultiParty = () => {
                 type="number"
                 showhelp={true}
                 helptext="Amount of time in seconds for pending liquidation before expiry."
-              />
+              /> */}
 
               {!empHasBeenCreated && (
                 <div
