@@ -40,7 +40,8 @@ export const FormItem: React.FC<Props> = ({
     <BootstrapForm.Row>
       <BootstrapForm.Group as={Col}>
         <BootstrapForm.Label style={{ paddingLeft: "0" }} column={true}>
-          {label} {showhelp && (
+          {label}{" "}
+          {showhelp && (
             <OverlayTrigger placement="right" overlay={popover}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

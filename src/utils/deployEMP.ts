@@ -1,5 +1,5 @@
 import { BigNumber, ethers, utils, ContractReceipt } from "ethers";
-import { parseFixed } from '@ethersproject/bignumber'
+import { parseFixed } from "@ethersproject/bignumber";
 import { toWei } from "web3-utils";
 import {
   DEFAULT_DISPUTER_DISPUTE_REWARD_PERCENTAGE,
@@ -36,14 +36,12 @@ export const deployEMP = async (
     syntheticName,
     syntheticSymbol,
     collateralRequirement,
-    minSponsorTokens
+    minSponsorTokens,
   } = values;
 
   const umaABIs = getUMAAbis();
 
-  const erc20StandardInterface = umaABIs.get(
-    "IERC20Standard"
-  );
+  const erc20StandardInterface = umaABIs.get("IERC20Standard");
 
   if (!erc20StandardInterface) {
     throw new Error("Invalid IERC20Standard Interface");
@@ -56,7 +54,9 @@ export const deployEMP = async (
   );
 
   const collateralDecimals = (await collateralInstance.decimals()).toString();
-  const minSponsorTokensWithCollateralDecimals = { rawValue: parseFixed(minSponsorTokens.toString(), collateralDecimals) }
+  const minSponsorTokensWithCollateralDecimals = {
+    rawValue: parseFixed(minSponsorTokens.toString(), collateralDecimals),
+  };
 
   const params = {
     expirationTimestamp: BigNumber.from(expirationTimestamp),
@@ -79,7 +79,7 @@ export const deployEMP = async (
     minSponsorTokens: minSponsorTokensWithCollateralDecimals,
     liquidationLiveness: BigNumber.from(DEFAULT_LIQUIDATION_LIVENESS), // 2 hour liquidation liveness.
     withdrawalLiveness: BigNumber.from(DEFAULT_WITHDRAWAL_LIVENESS), // 2 hour withdrawal liveness.
-    financialProductLibraryAddress: FINANCIAL_PRODUCT_LIBRARY // 0x0 because, by default, we don't want to use a custom library.
+    financialProductLibraryAddress: FINANCIAL_PRODUCT_LIBRARY, // 0x0 because, by default, we don't want to use a custom library.
   };
 
   const umaAddresses = getUMAAddresses(network.chainId);

@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Grid,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Box, Grid, TextField, Typography } from "@material-ui/core";
 import { ethers } from "ethers";
 
 import { CollateralInfo, EMPDataParsed, EthereumAddress } from "../types";
@@ -13,18 +8,25 @@ import { INFINITY } from "../constants";
 
 import { TransactionResultArea } from "./TransactionResultArea";
 import { FormButton } from "./FormButton";
-import { FormTitle } from "./FormTitle"
+import { FormTitle } from "./FormTitle";
 
 export interface MintProps {
-  empState: EMPDataParsed,
-  collateralInstance: ethers.Contract
-  empAddress: EthereumAddress
-  collateralState: CollateralInfo
-  address: EthereumAddress
-  signer: ethers.Signer
+  empState: EMPDataParsed;
+  collateralInstance: ethers.Contract;
+  empAddress: EthereumAddress;
+  collateralState: CollateralInfo;
+  address: EthereumAddress;
+  signer: ethers.Signer;
 }
 
-export const Mint: React.FC<MintProps> = ({ signer, address, empState, collateralInstance, empAddress, collateralState }) => {
+export const Mint: React.FC<MintProps> = ({
+  signer,
+  address,
+  empState,
+  collateralInstance,
+  empAddress,
+  collateralState,
+}) => {
   // internal state
   const [collateral, setCollateral] = useState<string>("0");
   const [tokens, setTokens] = useState<string>("0");
@@ -34,26 +36,35 @@ export const Mint: React.FC<MintProps> = ({ signer, address, empState, collatera
   const [success, setSuccess] = useState<boolean>(false);
 
   const { minSponsorTokens, tokenSymbol, tokenDecimals } = empState;
-  const { collateralSymbol, collateralAllowance, collateralBalance, collateralDecimals } = collateralState
+  const {
+    collateralSymbol,
+    collateralAllowance,
+    collateralBalance,
+    collateralDecimals,
+  } = collateralState;
 
-  const minSponsorTokensFromWei = parseFloat(
-    minSponsorTokens
-  );
+  const minSponsorTokensFromWei = parseFloat(minSponsorTokens);
   // input data
   const collateralToDeposit = Number(collateral) || 0;
   const tokensToCreate = Number(tokens) || 0;
 
   // computed synthetic
   const resultantTokens = tokensToCreate;
-  const resultantTokensBelowMin = resultantTokens < minSponsorTokensFromWei && resultantTokens !== 0;
+  const resultantTokensBelowMin =
+    resultantTokens < minSponsorTokensFromWei && resultantTokens !== 0;
 
   // computed collateral
-  const isBalanceBelowCollateralToDeposit = Number(collateralBalance) < collateralToDeposit;
-  const needAllowance = collateralAllowance !== INFINITY && Number(collateralAllowance) < collateralToDeposit;
+  const isBalanceBelowCollateralToDeposit =
+    Number(collateralBalance) < collateralToDeposit;
+  const needAllowance =
+    collateralAllowance !== INFINITY &&
+    Number(collateralAllowance) < collateralToDeposit;
 
   // computed general
   const transactionCR =
-    tokensToCreate > 0 && collateralToDeposit > 0 ? collateralToDeposit / tokensToCreate : 0;
+    tokensToCreate > 0 && collateralToDeposit > 0
+      ? collateralToDeposit / tokensToCreate
+      : 0;
 
   const mintTokens = async () => {
     setIsSubmitting(true);
@@ -63,9 +74,14 @@ export const Mint: React.FC<MintProps> = ({ signer, address, empState, collatera
       setHash(undefined);
       setError(undefined);
       try {
-        const data = getTaggedData(collateralToDeposit, tokensToCreate, Number(collateralDecimals), Number(tokenDecimals))
+        const data = getTaggedData(
+          collateralToDeposit,
+          tokensToCreate,
+          Number(collateralDecimals),
+          Number(tokenDecimals)
+        );
         const transaction = makeTransaction(address, empAddress, data);
-        const tx = await signer.sendTransaction(transaction)
+        const tx = await signer.sendTransaction(transaction);
         setHash(tx.hash as string);
         await tx.wait();
         setSuccess(true);
@@ -182,7 +198,11 @@ export const Mint: React.FC<MintProps> = ({ signer, address, empState, collatera
             </Grid>
 
             <Grid item md={10} sm={10} xs={10} style={{ paddingTop: "0" }}>
-              <TransactionResultArea hash={hash} error={error} success={success} />
+              <TransactionResultArea
+                hash={hash}
+                error={error}
+                success={success}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -197,7 +217,9 @@ export const Mint: React.FC<MintProps> = ({ signer, address, empState, collatera
               {`Resulting Collateral Ratio: ${transactionCR}`}
             </Typography>
             <Typography style={{ padding: "0 0 1em 0", fontSize: "0.85em" }}>
-              <span style={{ color: "#ff4a4a" }}>Note:</span> {" "}You need to consult the selected price identifier external price feed to compute this value.
+              <span style={{ color: "#ff4a4a" }}>Note:</span> You need to
+              consult the selected price identifier external price feed to
+              compute this value.
             </Typography>
           </Box>
         </Grid>

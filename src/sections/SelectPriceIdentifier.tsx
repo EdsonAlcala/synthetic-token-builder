@@ -53,7 +53,9 @@ export const SelectPriceIdentifier = () => {
           isSupported: item.isSupported,
         };
       });
-      const filteredPriceIdentifiers = priceIdentifiersResult.filter((s) => BLACKLISTED_IDENTIFIERS.indexOf(s.id) === -1)
+      const filteredPriceIdentifiers = priceIdentifiersResult.filter(
+        (s) => BLACKLISTED_IDENTIFIERS.indexOf(s.id) === -1
+      );
       setAllPriceIdentifiers(filteredPriceIdentifiers);
     },
   });

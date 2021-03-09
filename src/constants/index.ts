@@ -1,2 +1,2 @@
-export * from './constants'
-export * from './blacklistedIdentifiers'
+export * from "./constants";
+export * from "./blacklistedIdentifiers";

@@ -72,6 +72,6 @@ describe("Deploy EMP Tests", () => {
 
     const receipt = await deployEMP(values, network, signer);
 
-    expect(receipt).toBeDefined()
+    expect(receipt).toBeDefined();
   });
 });
