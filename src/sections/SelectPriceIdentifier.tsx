@@ -8,7 +8,7 @@ import { useGlobalState, useStep } from "../hooks";
 import { PRICE_IDENTIFIERS } from "../apollo/uma/queries";
 import { PriceIdentifierData } from "../types";
 import { StyledButton, StyledTitle } from "../components";
-import { DEFAULT_SELECT_VALUE } from "../constants";
+import { BLACKLISTED_IDENTIFIERS, DEFAULT_SELECT_VALUE } from "../constants";
 import Connection from "../hooks/Connection";
 
 export interface PriceIdentifierResponse {
@@ -53,7 +53,8 @@ export const SelectPriceIdentifier = () => {
           isSupported: item.isSupported,
         };
       });
-      setAllPriceIdentifiers(priceIdentifiersResult);
+      const filteredPriceIdentifiers = priceIdentifiersResult.filter((s) => BLACKLISTED_IDENTIFIERS.indexOf(s.id) === -1)
+      setAllPriceIdentifiers(filteredPriceIdentifiers);
     },
   });
 
