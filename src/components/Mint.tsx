@@ -34,7 +34,7 @@ export const Mint: React.FC<MintProps> = ({
   const [error, setError] = useState<Error | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState<boolean>(false);
-
+  const [externalPrice, setExternalPrice] = useState("0")
   const { minSponsorTokens, tokenSymbol, tokenDecimals } = empState;
   const {
     collateralSymbol,
@@ -66,6 +66,7 @@ export const Mint: React.FC<MintProps> = ({
       ? collateralToDeposit / tokensToCreate
       : 0;
 
+  const transactionCRPriced = transactionCR > 0 ? transactionCR * Number(externalPrice) : 0;
   const mintTokens = async () => {
     setIsSubmitting(true);
     setSuccess(false);
@@ -86,6 +87,9 @@ export const Mint: React.FC<MintProps> = ({
         await tx.wait();
         setSuccess(true);
         console.log("Minting tokens successfully");
+        setTimeout(() => {
+          setSuccess(false)
+        }, 4000);
       } catch (error) {
         console.error(error);
         setError(error);
@@ -110,6 +114,10 @@ export const Mint: React.FC<MintProps> = ({
       await receipt.wait();
       setSuccess(true);
       console.log("Set max allowance successfully");
+
+      setTimeout(() => {
+        setSuccess(false)
+      }, 4000);
     } catch (error) {
       console.error(error);
       setError(error);
@@ -226,6 +234,21 @@ export const Mint: React.FC<MintProps> = ({
               <span style={{ color: "#ff4a4a" }}>Note:</span> You need to
               consult the selected price identifier external price feed to
               compute this value.
+            </Typography>
+            <TextField
+              size="small"
+              fullWidth={true}
+              type="number"
+              variant="outlined"
+              label={`External price (USD)`}
+              inputProps={{ min: "0", max: collateralBalance }}
+              value={externalPrice}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setExternalPrice(e.target.value)
+              }
+            />
+            <Typography style={{ padding: "1em 0 1em 0" }}>
+              {`Resulting Priced Collateral Ratio: ${transactionCRPriced}`}
             </Typography>
           </Box>
         </Grid>
