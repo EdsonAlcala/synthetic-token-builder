@@ -34,7 +34,7 @@ export const Mint: React.FC<MintProps> = ({
   const [error, setError] = useState<Error | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState<boolean>(false);
-  const [externalPrice, setExternalPrice] = useState("0")
+  const [externalPrice, setExternalPrice] = useState("0");
   const { minSponsorTokens, tokenSymbol, tokenDecimals } = empState;
   const {
     collateralSymbol,
@@ -66,7 +66,8 @@ export const Mint: React.FC<MintProps> = ({
       ? collateralToDeposit / tokensToCreate
       : 0;
 
-  const transactionCRPriced = transactionCR > 0 ? transactionCR * Number(externalPrice) : 0;
+  const transactionCRPriced =
+    transactionCR > 0 ? transactionCR * Number(externalPrice) : 0;
   const mintTokens = async () => {
     setIsSubmitting(true);
     setSuccess(false);
@@ -88,7 +89,7 @@ export const Mint: React.FC<MintProps> = ({
         setSuccess(true);
         console.log("Minting tokens successfully");
         setTimeout(() => {
-          setSuccess(false)
+          setSuccess(false);
         }, 4000);
       } catch (error) {
         console.error(error);
@@ -116,7 +117,7 @@ export const Mint: React.FC<MintProps> = ({
       console.log("Set max allowance successfully");
 
       setTimeout(() => {
-        setSuccess(false)
+        setSuccess(false);
       }, 4000);
     } catch (error) {
       console.error(error);
