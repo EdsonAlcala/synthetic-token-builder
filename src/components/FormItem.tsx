@@ -78,9 +78,10 @@ export const FormItem: React.FC<Props> = ({
 
 const DateComponent = (props: any) => {
   const [, , helpers] = useField(props.name);
-  const yesterday = moment().subtract(1, "day");
+  const today = moment()
+
   const valid = (current: any) => {
-    return current.isAfter(yesterday);
+    return current.isAfter(today);
   };
   const { setValue } = helpers;
 
