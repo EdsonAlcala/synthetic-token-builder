@@ -25,7 +25,7 @@ export const Mint: React.FC<MintProps> = ({
   empState,
   collateralInstance,
   empAddress,
-  collateralState,
+  collateralState
 }) => {
   // internal state
   const [collateral, setCollateral] = useState<string>("0");
@@ -35,7 +35,7 @@ export const Mint: React.FC<MintProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [externalPrice, setExternalPrice] = useState("0");
-  const { minSponsorTokens, tokenSymbol, tokenDecimals } = empState;
+  const { minSponsorTokens, tokenSymbol, tokenDecimals, priceIdentifier } = empState;
   const {
     collateralSymbol,
     collateralAllowance,
@@ -67,7 +67,7 @@ export const Mint: React.FC<MintProps> = ({
       : 0;
 
   const transactionCRPriced =
-    transactionCR > 0 ? transactionCR * Number(externalPrice) : 0;
+    transactionCR > 0 ? transactionCR / Number(externalPrice) : 0;
   const mintTokens = async () => {
     setIsSubmitting(true);
     setSuccess(false);
@@ -87,7 +87,6 @@ export const Mint: React.FC<MintProps> = ({
         setHash(tx.hash as string);
         await tx.wait();
         setSuccess(true);
-        console.log("Minting tokens successfully");
         setTimeout(() => {
           setSuccess(false);
         }, 4000);
@@ -232,16 +231,17 @@ export const Mint: React.FC<MintProps> = ({
               {`Resulting Collateral Ratio: ${transactionCR}`}
             </Typography>
             <Typography style={{ padding: "0 0 1em 0", fontSize: "0.85em" }}>
-              <span style={{ color: "#ff4a4a" }}>Note:</span> You need to
-              consult the selected price identifier external price feed to
-              compute this value.
+              <span style={{ color: "#ff4a4a" }}>Note:</span>
+              {` You need to
+              consult the selected price identifier (${priceIdentifier}) external price feed to
+              compute this value.`}
             </Typography>
             <TextField
               size="small"
               fullWidth={true}
               type="number"
               variant="outlined"
-              label={`External price (USD)`}
+              label={`External price ${priceIdentifier}`}
               inputProps={{ min: "0", max: collateralBalance }}
               value={externalPrice}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
