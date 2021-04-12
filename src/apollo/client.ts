@@ -5,18 +5,39 @@ import {
   HttpLink,
 } from "@apollo/client";
 
-const umaLinkKovan = new HttpLink({
-  uri: "https://api.thegraph.com/subgraphs/name/umaprotocol/uma-kovan",
+const umaLinkKovanVoting = new HttpLink({
+  uri: "https://api.thegraph.com/subgraphs/name/umaprotocol/kovan-voting",
 });
-const umaLinkMainnet = new HttpLink({
-  uri: "https://api.thegraph.com/subgraphs/name/umaprotocol/uma",
+
+const umaLinkKovanContracts = new HttpLink({
+  uri: "https://api.thegraph.com/subgraphs/name/umaprotocol/kovan-contracts",
 });
+
+const umaLinkMainnetVoting = new HttpLink({
+  uri: "https://api.thegraph.com/subgraphs/name/umaprotocol/mainnet-voting",
+});
+
+const umaLinkMainnetContracts = new HttpLink({
+  uri: "https://api.thegraph.com/subgraphs/name/umaprotocol/mainnet-contracts",
+});
+
+const umaLinksMainnet = ApolloLink.split(
+  (operation) => operation.getContext().useMainnetContracts === true,
+  umaLinkMainnetContracts,
+  umaLinkMainnetVoting
+)
+
+const umaLinksKovan = ApolloLink.split(
+  (operation) => operation.getContext().useMainnetContracts === true,
+  umaLinkKovanContracts,
+  umaLinkKovanVoting
+)
 
 // Uses ApolloLink's directional composition logic, docs: https://www.apollographql.com/docs/react/api/link/introduction/#directional-composition
 const umaLinks = ApolloLink.split(
   (operation) => operation.getContext().clientName === "UMA42",
-  umaLinkKovan,
-  umaLinkMainnet
+  umaLinksKovan,
+  umaLinksMainnet
 );
 
 export const client = new ApolloClient({

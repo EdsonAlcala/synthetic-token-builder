@@ -47,7 +47,7 @@ export const SelectCollateralToken = () => {
   // eslint-disable-next-line
   const { loading, error } = useQuery(COLLATERALS, {
     skip: !network,
-    context: { clientName: subgraphToQuery },
+    context: { clientName: subgraphToQuery, useMainnetContracts: true },
     pollInterval: 10000,
     onCompleted: ({ tokens }: CollateralResponse) => {
       setCollateralTokens(tokens);

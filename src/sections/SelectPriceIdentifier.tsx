@@ -43,7 +43,7 @@ export const SelectPriceIdentifier = () => {
   // TODO
   // eslint-disable-next-line
   const { loading, error } = useQuery(PRICE_IDENTIFIERS, {
-    context: { clientName: subgraphToQuery },
+    context: { clientName: subgraphToQuery, useMainnetContracts: false },
     skip: !network,
     pollInterval: 10000,
     onCompleted: ({ priceIdentifiers }: PriceIdentifierResponse) => {
