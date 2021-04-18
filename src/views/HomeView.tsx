@@ -52,7 +52,7 @@ export const HomeView: React.FC = () => {
           </StyledLink>
         </Grid>
         <Grid item={true} xs={6} lg={6}>
-          <YouTube opts={opts} videoId="Ogrs1eQZSeA" onReady={onReady} />
+          <YouTube opts={opts} videoId="OwyGketRfhA" onReady={onReady} />
         </Grid>
       </Grid>
     </WrapperContainer>
