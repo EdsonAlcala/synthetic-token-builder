@@ -181,7 +181,7 @@ export const CreateExpiringMultiParty = () => {
                 placeHolder="Timestamp (seconds)"
                 showhelp={true}
                 isDate={true}
-                helptext="Unix timestamp of when the contract will expire."
+                helptext="Unix timestamp of when the contract will expire(UTC)."
               />
 
               <FormItem

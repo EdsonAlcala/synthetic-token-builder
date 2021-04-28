@@ -93,6 +93,7 @@ const DateComponent = (props: any) => {
 
   return (
     <Datetime
+      utc={true}
       className="custom"
       onChange={handleOnChange}
       isValidDate={valid}
