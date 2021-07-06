@@ -87,9 +87,7 @@ export const CreateExpiringMultiParty = () => {
           syntheticName: values.syntheticName,
           syntheticSymbol: values.syntheticSymbol,
           collateralRequirement: parseInt(values.collateralRequirement, 10),
-          minSponsorTokens: parseInt(values.minSponsorTokens, 10),
-          // liquidationLiveness: parseInt(values.liquidationLiveness, 10),
-          // withdrawalLiveness: parseInt(values.withdrawalLiveness, 10),
+          minSponsorTokens: parseInt(values.minSponsorTokens, 10)
         };
 
         const result = await deployEMP(params, network, signer);

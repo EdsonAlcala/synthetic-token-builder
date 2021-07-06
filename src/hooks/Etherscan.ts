@@ -7,11 +7,10 @@ interface NetworkMap {
 }
 
 const NETWORK_MAP: NetworkMap = {
-  kovan: "https://kovan.etherscan.io",
-  ropsten: "https://ropsten.etherscan.io",
-  rinkeby: "https://rinkeby.etherscan.io",
-  goerli: "https://goerli.etherscan.io",
-  mainnet: "https://etherscan.io",
+  42: "https://kovan.etherscan.io",
+  1: "https://etherscan.io",
+  137: "https://polygonscan.com",
+  80001: "https://mumbai.polygonscan.com"
 };
 
 function useEtherscan() {
@@ -21,7 +20,7 @@ function useEtherscan() {
     if (!network || !hex || !network.name) {
       return undefined;
     }
-    const baseUrl = NETWORK_MAP[network.name] || NETWORK_MAP.mainnet;
+    const baseUrl = NETWORK_MAP[network.chainId] || NETWORK_MAP.mainnet;
     // If the length is 66 then the hex is a transaction.
     if (hex.length === 66) {
       return `${baseUrl}/tx/${hex}`;

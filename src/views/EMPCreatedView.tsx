@@ -164,25 +164,21 @@ export const EMPCreatedView: React.FC = () => {
         const priceIdentifierParsed = parseBytes32String(
           newState.priceIdentifier
         );
-        const collateralRequirementPercentage = `${
-          parseFloat(formatUnits(newState.collateralRequirement)) * 100
-        } %`;
+        const collateralRequirementPercentage = `${parseFloat(formatUnits(newState.collateralRequirement)) * 100
+          } %`;
         const expireDate = new Date(
           newState.expirationTimestamp.toNumber() * 1000
         ).toLocaleString("en-GB", { timeZone: "UTC" });
         const minSponsorTokens = parseFloat(
           formatUnits(newState.minSponsorTokens, collateralDecimals)
         ).toString();
-        const disputeBondPercentage = `${
-          parseFloat(formatUnits(newState.disputeBondPercentage)) * 100
-        } %`;
-        const disputerDisputeRewardPercentage = `${
-          parseFloat(formatUnits(newState.disputerDisputeRewardPercentage)) *
+        const disputeBondPercentage = `${parseFloat(formatUnits(newState.disputeBondPercentage)) * 100
+          } %`;
+        const disputerDisputeRewardPercentage = `${parseFloat(formatUnits(newState.disputerDisputeRewardPercentage)) *
           100
-        } %`;
-        const sponsorDisputeRewardPercentage = `${
-          parseFloat(formatUnits(newState.sponsorDisputeRewardPercentage)) * 100
-        } %`;
+          } %`;
+        const sponsorDisputeRewardPercentage = `${parseFloat(formatUnits(newState.sponsorDisputeRewardPercentage)) * 100
+          } %`;
 
         const dataParsed: EMPDataParsed = {
           collateralCurrency: newState.collateralCurrency,

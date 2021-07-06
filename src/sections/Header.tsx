@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import Connection from "../hooks/Connection";
 import UMALogo from "../images/uma-red-logo.png";
+import { KOVAN_ID, MAINNET_ID, POLYGON_MAINNET, POLYGON_MUMBAI } from "../constants";
 
 interface IProps {
   styled: {
@@ -66,7 +67,22 @@ const AddressBar = () => {
   const { connect, signer, network, address } = Connection.useContainer();
   const connected = signer !== null;
 
-  const networkName = network?.name === "homestead" ? "mainnet" : network?.name;
+  const getNetworkName = (chainId?: number) => {
+    if (!chainId) {
+      return ""
+    }
+    switch (chainId) {
+      case MAINNET_ID:
+        return "mainnet"
+      case KOVAN_ID:
+        return "Kovan";
+      case POLYGON_MAINNET:
+        return "Polygon";
+      case POLYGON_MUMBAI:
+        return "Mumbai";
+    }
+  }
+  const networkName = getNetworkName(network?.chainId);
   const shortAddress = `${address?.substr(0, 10)}…${address?.substr(-9)}`;
 
   return (
