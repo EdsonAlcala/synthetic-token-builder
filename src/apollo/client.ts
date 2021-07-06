@@ -25,13 +25,13 @@ const umaLinksMainnet = ApolloLink.split(
   (operation) => operation.getContext().useMainnetContracts === true,
   umaLinkMainnetContracts,
   umaLinkMainnetVoting
-)
+);
 
 const umaLinksKovan = ApolloLink.split(
   (operation) => operation.getContext().useMainnetContracts === true,
   umaLinkKovanContracts,
   umaLinkKovanVoting
-)
+);
 
 // Uses ApolloLink's directional composition logic, docs: https://www.apollographql.com/docs/react/api/link/introduction/#directional-composition
 const umaLinks = ApolloLink.split(

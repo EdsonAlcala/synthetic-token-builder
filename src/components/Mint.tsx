@@ -25,7 +25,7 @@ export const Mint: React.FC<MintProps> = ({
   empState,
   collateralInstance,
   empAddress,
-  collateralState
+  collateralState,
 }) => {
   // internal state
   const [collateral, setCollateral] = useState<string>("0");
@@ -35,7 +35,12 @@ export const Mint: React.FC<MintProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [externalPrice, setExternalPrice] = useState("0");
-  const { minSponsorTokens, tokenSymbol, tokenDecimals, priceIdentifier } = empState;
+  const {
+    minSponsorTokens,
+    tokenSymbol,
+    tokenDecimals,
+    priceIdentifier,
+  } = empState;
   const {
     collateralSymbol,
     collateralAllowance,

@@ -9,7 +9,13 @@ import { COLLATERALS } from "../apollo/uma/queries";
 import Connection from "../hooks/Connection";
 import { StyledButton, StyledTitle } from "../components";
 import { useHistory } from "react-router-dom";
-import { DEFAULT_COLLATERALS_FOR_POLYGON_MAINNET, DEFAULT_COLLATERALS_FOR_POLYGON_MUMBAI, DEFAULT_SELECT_VALUE, POLYGON_MAINNET, POLYGON_MUMBAI } from "../constants";
+import {
+  DEFAULT_COLLATERALS_FOR_POLYGON_MAINNET,
+  DEFAULT_COLLATERALS_FOR_POLYGON_MUMBAI,
+  DEFAULT_SELECT_VALUE,
+  POLYGON_MAINNET,
+  POLYGON_MUMBAI,
+} from "../constants";
 
 export interface CollateralResponse {
   tokens: TokenDataResponse[];
@@ -51,9 +57,9 @@ export const SelectCollateralToken = () => {
     pollInterval: 10000,
     onCompleted: ({ tokens }: CollateralResponse) => {
       if (network?.chainId === POLYGON_MAINNET) {
-        setCollateralTokens(DEFAULT_COLLATERALS_FOR_POLYGON_MAINNET)
+        setCollateralTokens(DEFAULT_COLLATERALS_FOR_POLYGON_MAINNET);
       } else if (network?.chainId === POLYGON_MUMBAI) {
-        setCollateralTokens(DEFAULT_COLLATERALS_FOR_POLYGON_MUMBAI)
+        setCollateralTokens(DEFAULT_COLLATERALS_FOR_POLYGON_MUMBAI);
       } else {
         setCollateralTokens(tokens);
       }

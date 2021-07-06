@@ -10,7 +10,7 @@ const NETWORK_MAP: NetworkMap = {
   42: "https://kovan.etherscan.io",
   1: "https://etherscan.io",
   137: "https://polygonscan.com",
-  80001: "https://mumbai.polygonscan.com"
+  80001: "https://mumbai.polygonscan.com",
 };
 
 function useEtherscan() {
